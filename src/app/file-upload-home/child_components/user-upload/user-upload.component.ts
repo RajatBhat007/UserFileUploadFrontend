@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2,ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 import { FileUploadService } from 'src/app/fileUploadService/file-upload.service';
@@ -7,7 +14,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-user-upload',
   templateUrl: './user-upload.component.html',
-  styleUrls: ['./user-upload.component.scss']
+  styleUrls: ['./user-upload.component.scss'],
 })
 export class UserUploadComponent implements OnInit {
   contextName: any;
@@ -19,28 +26,33 @@ export class UserUploadComponent implements OnInit {
   webcamImage: any;
   capturedImageName: string = '';
   sizeInKB: string = '';
-  videoPreviewUrl: string='';
+  videoPreviewUrl: string = '';
   fileContext: any;
   sub_type: any;
   sub_typeFile: any;
-  id_user: any='';
-  demoMessage:any='';
-  inputMessage: any='';
-  uploadedFileName: any='';
-  org_id: any='';
+  id_user: any = '';
+  demoMessage: any = '';
+  inputMessage: any = '';
+  uploadedFileName: any = '';
+  org_id: any = '';
   userID: any;
   receivers_id_user: any;
-  receiver_org_id: number=0;
+  receiver_org_id: number = 0;
   receiver_user_id: any;
-  DataForUserUploadDetails:any;
+  DataForUserUploadDetails: any;
   file: any;
-  successMessage: any="Please Upload a Correct Data";
-  ViewButtonmessage: string="view More";
+  successMessage: any = 'Please Upload a Correct Data';
+  ViewButtonmessage: string = 'view More';
   srcUrl: any;
-  displayContent: boolean=false;
-  fileInput:any
+  displayContent: boolean = false;
+  fileInput: any;
 
-  constructor(public http: FileUploadService, private renderer: Renderer2,private cdr: ChangeDetectorRef,private sanitizer: DomSanitizer) { }
+  constructor(
+    public http: FileUploadService,
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
+  ) {}
   @ViewChild('videoElement')
   videoElement!: ElementRef<any>;
   video!: HTMLVideoElement;
@@ -53,7 +65,7 @@ export class UserUploadComponent implements OnInit {
   contextData: any;
   ClickedUploadButton: boolean = false;
   showWebcam: boolean = false;
-  openViewCard:boolean=false;
+  openViewCard: boolean = false;
   selectedCardIndex: number = -1;
   public isRecording: boolean = false;
   private mediaRecorder: MediaRecorder | undefined;
@@ -61,20 +73,17 @@ export class UserUploadComponent implements OnInit {
 
   // Video Recorder
   modal!: HTMLElement | null;
- 
+
   startRecordingBtn!: HTMLElement | null;
   stopRecordingBtn!: HTMLElement | null;
   cancelBtn!: HTMLElement | null;
   uploadBtn!: HTMLElement | null;
   recordedVideoPreview!: HTMLVideoElement | null;
-  startRecordingVideo:boolean=false;
-
-
-
+  startRecordingVideo: boolean = false;
 
   ngOnInit(): void {
     this.getContextData();
- 
+
     // this.setupMediaRecorder();
     // this.modal = document.getElementById('exampleModalRecordVideo');
     // this.video = this.videoElement.nativeElement;
@@ -84,16 +93,15 @@ export class UserUploadComponent implements OnInit {
     // this.uploadBtn = document.getElementById('uploadBtnRecorder');
     // this.recordedVideoPreview = document.getElementById('recordedVideoPreview');
     // this.mediaRecorder = null;
-    
-
   }
   public trigger: Subject<void> = new Subject<void>();
   public videoOptions: MediaTrackConstraints = {
-    facingMode: 'environment' // Use 'user' for front camera, 'environment' for rear camera
+    facingMode: 'environment', // Use 'user' for front camera, 'environment' for rear camera
   };
 
   public triggerObservable: Observable<void> = this.trigger.asObservable();
-  public triggerObservableVideoRecording: Observable<void> = this.trigger.asObservable();
+  public triggerObservableVideoRecording: Observable<void> =
+    this.trigger.asObservable();
   private mediaStream: MediaStream | undefined;
 
   handleImage(webcamImage: any): void {
@@ -112,10 +120,8 @@ export class UserUploadComponent implements OnInit {
     const binaryData = atob(this.capturedImageDataUrl.split(',')[1]);
     const fileSizeInBytes = binaryData.length;
     // console.log('File Size:', fileSizeInBytes, 'bytes', fileSizeInKB, 'KB', fileSizeInMB, 'MB');
-    this.fileSize = this.formatFileSize(fileSizeInBytes)
-
+    this.fileSize = this.formatFileSize(fileSizeInBytes);
   }
-
 
   captureImage(): void {
     // Trigger image capture
@@ -125,7 +131,8 @@ export class UserUploadComponent implements OnInit {
 
   openCamera() {
     this.showWebcam = true;
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         this.mediaStream = stream; // Store the MediaStream
         this.video = this.videoElement.nativeElement;
@@ -143,7 +150,7 @@ export class UserUploadComponent implements OnInit {
 
     if (this.mediaStream) {
       // Stop the video stream
-      this.mediaStream.getTracks().forEach(track => track.stop());
+      this.mediaStream.getTracks().forEach((track) => track.stop());
     }
   }
   cancelCapture() {
@@ -172,62 +179,66 @@ export class UserUploadComponent implements OnInit {
   //   this.fileSize = this.formatFileSize(fileSizeInBytes)
   // }
   // Modify your uploadImage function
-uploadImage() {
-  this.closeCamera();
-  this.contentUploaded = true;
-  // console.log('Captured image:', this.capturedImageDataUrl);
+  uploadImage() {
+    this.closeCamera();
+    this.contentUploaded = true;
+    // console.log('Captured image:', this.capturedImageDataUrl);
 
-  // Convert data URL to binary
-  const binaryData = atob(this.capturedImageDataUrl.split(',')[1]);
+    // Convert data URL to binary
+    const binaryData = atob(this.capturedImageDataUrl.split(',')[1]);
 
-  // Convert binary string to Uint8Array
-  const uint8Array = new Uint8Array(binaryData.length);
-  for (let i = 0; i < binaryData.length; i++) {
+    // Convert binary string to Uint8Array
+    const uint8Array = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
       uint8Array[i] = binaryData.charCodeAt(i);
+    }
+
+    // Create a Blob from the Uint8Array
+    const blob = new Blob([uint8Array], { type: 'image/png' });
+
+    // Create a File object from the Blob
+    const file = new File(
+      [blob],
+      `captured_image_${new Date().getTime()}.png`,
+      { type: 'image/png' }
+    );
+    console.log(file);
+    this.file = file;
+
+    // Set up a file input element
+    this.fileInput = document.createElement('input');
+    console.log(this.fileInput);
+    this.fileInput.type = 'file';
+    this.fileInput.style.display = 'none';
+    document.body.appendChild(this.fileInput);
+
+    // Set the file to the file input element
+    this.fileInput.files = [file];
+
+    // Trigger the change event on the file input to simulate a file upload
+    const event = new Event('change', { bubbles: true });
+    this.fileInput.dispatchEvent(event);
+
+    // Clean up the file input element
+    document.body.removeChild(this.fileInput);
+    this.fileInput = null;
+
+    // If needed, you can also update your component properties
+
+    this.capturedImageName = file.name;
+    this.fileType = file.type;
+    this.fileName = file.name;
+    this.file = file;
+
+    // Calculate file size
+    const fileSizeInBytes = file.size;
+    this.fileSize = this.formatFileSize(fileSizeInBytes);
   }
-
-  // Create a Blob from the Uint8Array
-  const blob = new Blob([uint8Array], { type: 'image/png' });
-
-  // Create a File object from the Blob
-  const file = new File([blob], `captured_image_${new Date().getTime()}.png`, { type: 'image/png' });
-  console.log(file)
-  this.file=file;
-
-  // Set up a file input element
-  this.fileInput = document.createElement('input');
-  console.log(this.fileInput)
-  this.fileInput.type = 'file';
-  this.fileInput.style.display = 'none';
-  document.body.appendChild(this.fileInput);
-
-  // Set the file to the file input element
-  this.fileInput.files = [file];
-
-  // Trigger the change event on the file input to simulate a file upload
-  const event = new Event('change', { bubbles: true });
-  this.fileInput.dispatchEvent(event);
-
-  // Clean up the file input element
-  document.body.removeChild(this.fileInput);
-  this.fileInput = null;
-
-  // If needed, you can also update your component properties
-  
-  this.capturedImageName = file.name;
-  this.fileType = file.type;
-  this.fileName = file.name;
-  this.file = file;
-
-  // Calculate file size
-  const fileSizeInBytes = file.size;
-  this.fileSize = this.formatFileSize(fileSizeInBytes);
-}
-
 
   // Video REcorder
   openVideo() {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         if (this.video) {
           this.video.srcObject = stream;
@@ -241,7 +252,7 @@ uploadImage() {
   }
 
   startRecording() {
-    this.startRecordingVideo=true;
+    this.startRecordingVideo = true;
     // this.recordedChunks = [];
     // const options = { mimeType: 'video/webm; codecs=vp9' };
     // if (this.video) {
@@ -311,39 +322,47 @@ uploadImage() {
     if (this.modal) {
       this.modal.querySelector('.close')?.addEventListener('click', () => {
         if (this.video) {
-          navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-  .then(stream => {
-    const tracks = stream.getTracks();
-    console.log('Tracks:', tracks);
-  })
-  .catch(error => {
-    console.error('Error accessing media devices:', error);
-  });
+          navigator.mediaDevices
+            .getUserMedia({ video: true, audio: true })
+            .then((stream) => {
+              const tracks = stream.getTracks();
+              console.log('Tracks:', tracks);
+            })
+            .catch((error) => {
+              console.error('Error accessing media devices:', error);
+            });
           if (this.modal) this.modal.style.display = 'none';
         }
       });
 
       this.modal.addEventListener('hidden.bs.modal', () => {
         if (this.video) {
-          navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-          .then(stream => {
-            const tracks = stream.getTracks();
-            console.log('Tracks:', tracks);
-          })
-          .catch(error => {
-            console.error('Error accessing media devices:', error);
-          });
+          navigator.mediaDevices
+            .getUserMedia({ video: true, audio: true })
+            .then((stream) => {
+              const tracks = stream.getTracks();
+              console.log('Tracks:', tracks);
+            })
+            .catch((error) => {
+              console.error('Error accessing media devices:', error);
+            });
         }
       });
     }
 
-    if (this.startRecordingBtn) this.startRecordingBtn.addEventListener('click', () => this.startRecording());
-    if (this.stopRecordingBtn) this.stopRecordingBtn.addEventListener('click', () => this.stopRecording());
+    if (this.startRecordingBtn)
+      this.startRecordingBtn.addEventListener('click', () =>
+        this.startRecording()
+      );
+    if (this.stopRecordingBtn)
+      this.stopRecordingBtn.addEventListener('click', () =>
+        this.stopRecording()
+      );
     // if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.cancelCamera());
-    if (this.uploadBtn) this.uploadBtn.addEventListener('click', () => this.uploadVideo());
+    if (this.uploadBtn)
+      this.uploadBtn.addEventListener('click', () => this.uploadVideo());
   }
 
- 
   getContextData() {
     this.ordId = 1;
     this.http.getContext(this.ordId).subscribe((res) => {
@@ -366,73 +385,65 @@ uploadImage() {
       }
     });
   }
-  getContextSubType(contextsubType:any){
-    console.log(contextsubType)
-    this.sub_typeFile=contextsubType?.subtype;
-    console.log(this.sub_typeFile)
+  getContextSubType(contextsubType: any) {
+    console.log(contextsubType);
+    this.sub_typeFile = contextsubType?.subtype;
+    console.log(this.sub_typeFile);
   }
 
+  postUploadedData(fileName: any) {
+    this.fileContext = this.contextName;
+    this.sub_type = this.sub_typeFile;
+    this.id_user = 1;
+    this.org_id = 1;
+    this.userID = 'TGC';
+    this.inputMessage = this.demoMessage;
+    this.receivers_id_user = 2;
+    this.uploadedFileName = this.fileName;
+    this.receiver_org_id = 2;
+    this.receiver_user_id = 'tcs';
+    console.log(this.uploadedFileName);
+    let body = {
+      file_context: this.contextName,
+      sub_type: this.sub_typeFile,
+      id_user: this.id_user,
+      org_id: this.org_id,
+      user_id: this.userID,
+      user_message: this.demoMessage,
+      receivers_id_user: this.receivers_id_user,
+      uploadedFileName: this.fileName,
+      receiver_org_id: this.receiver_org_id,
+      receiver_user_id: this.receiver_user_id,
+    };
 
-postUploadedData(fileName:any){
-  
+    console.log(body);
 
-  this.fileContext=this.contextName;
-  this.sub_type=this.sub_typeFile;
-  this.id_user=1;
-  this.org_id=1;
-  this.userID='TGC';
-  this.inputMessage=this.demoMessage;
-  this.receivers_id_user=2;
-  this.uploadedFileName=this.fileName;
-  this.receiver_org_id=2;
-  this.receiver_user_id='tcs';
-  console.log(this.uploadedFileName)
-  let body={
-    'file_context':this.contextName,
-  'sub_type':this.sub_typeFile,
-  'id_user':this.id_user,
-  'org_id':this.org_id,
-  'user_id':this.userID,
-  'user_message':this.demoMessage,
-  'receivers_id_user':this.receivers_id_user,
-  'uploadedFileName':this.fileName,
-  'receiver_org_id':this.receiver_org_id,
-  'receiver_user_id':this.receiver_user_id
-
+    console.log(this.fileContext, this.sub_type);
+    console.log(this.file);
+    this.http.postUserUpload(body, this.file).subscribe((res: any) => {
+      console.log(res);
+      this.successMessage = res.message;
+    });
   }
-
-console.log(body);
-
-
-  console.log(this.fileContext,this.sub_type)
-  console.log(this.file);
-  this.http.postUserUpload(body,this.file).subscribe((res:any)=>{
-    console.log(res);
-    this.successMessage=res.message
-
-  })
-
-}
-getUserUploadDetails(){
-  this.id_user=1;
-  this.org_id=1;
-  this.userID='TGC';
-  let body={
-    'id_user':this.id_user,
-    'org_id':this.org_id,
-    'user_id':this.userID
+  getUserUploadDetails() {
+    this.id_user = 1;
+    this.org_id = 1;
+    this.userID = 'TGC';
+    let body = {
+      id_user: this.id_user,
+      org_id: this.org_id,
+      user_id: this.userID,
+    };
+    this.http.getUserUploadDatails(body).subscribe((res: any) => {
+      console.log(res);
+      this.DataForUserUploadDetails = res;
+    });
   }
-  this.http.getUserUploadDatails(body).subscribe((res:any)=>{
-    console.log(res);
-    this.DataForUserUploadDetails=res;
-  })
-}
 
   handleFileInput(event: any): void {
     console.log(event);
- 
-     this.file = event.target.files[0];
-    
+
+    this.file = event.target.files[0];
 
     // Get the first selected file
     if (this.file) {
@@ -462,62 +473,49 @@ getUserUploadDetails(){
     this.newUploadActive = false;
     this.isSubCategoryDataHere = true;
   }
-  ViewCard(index:any){
-    console.log(index)
- 
-      this.openViewCard=true;
-      this.ViewButtonmessage='View less'
-      this.selectedCardIndex = index;
-  
-     
-  
-    // this.openViewCard=!this.openViewCard;
-  }
-  ViewLessCard(index:any){
-    this.openViewCard=false;
-    this.ViewButtonmessage='View More'
+  ViewCard(index: any) {
+    console.log(index);
+
+    this.openViewCard = true;
+    this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;
 
+    // this.openViewCard=!this.openViewCard;
   }
-  downLoadPriview(userUploadData:any,index:any){
+  ViewLessCard(index: any) {
+    this.openViewCard = false;
+    this.ViewButtonmessage = 'View More';
+    this.selectedCardIndex = index;
+  }
+  downLoadPriview(userUploadData: any, index: any) {
     console.log(userUploadData);
-    console.log(userUploadData.file_type)
-   
+    console.log(userUploadData.file_type);
 
     // Concatenate the sanitized base path and file path
-  
-    
 
-   
-      console.log(this.srcUrl);
-      // removeComment after https applied
-      if(this.selectedCardIndex==index){
-        
-        // if(userUploadData.file_type==='video'||userUploadData.file_type==='audio'||userUploadData.file_type==='image'){
-        //   const basePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.urlString);
+    console.log(this.srcUrl);
+    // removeComment after https applied
+    if (this.selectedCardIndex == index) {
+      // if(userUploadData.file_type==='video'||userUploadData.file_type==='audio'||userUploadData.file_type==='image'){
+      //   const basePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.urlString);
 
-        //   // Assuming 'userUploadData?.file_path' is a dynamic path that needs to be sanitized
-        //   const filePath = this.sanitizer.bypassSecurityTrustResourceUrl(userUploadData?.file_path);
-      
-        //   // Concatenate the sanitized base path and file path
-        //   this.srcUrl = `${basePath}/${filePath}`;
-        //   this.displayContent=!this.displayContent;
-        // }
-        // else{
-          const link = document.createElement('a');
-          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
-          link.href = this.srcUrl;
-          link.target = '_self'; // Open the link in a new tab/window, optional
-          link.click();
+      //   // Assuming 'userUploadData?.file_path' is a dynamic path that needs to be sanitized
+      //   const filePath = this.sanitizer.bypassSecurityTrustResourceUrl(userUploadData?.file_path);
 
-        // }
-       
-      }
-      
+      //   // Concatenate the sanitized base path and file path
+      //   this.srcUrl = `${basePath}/${filePath}`;
+      //   this.displayContent=!this.displayContent;
+      // }
+      // else{
+      const link = document.createElement('a');
+      this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+      link.href = this.srcUrl;
+      link.target = '_blank'; // Open the link in a new tab/window, optional
+      link.click();
+
+      // }
+    }
+
     // Create a hidden anchor element
-   
-  
-    
   }
-
 }

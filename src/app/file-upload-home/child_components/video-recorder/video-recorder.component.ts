@@ -16,7 +16,7 @@ export class VideoRecorderComponent {
   private recordedChunks: Blob[] = [];
   private stream!: MediaStream;
   public recordedVideoUrl: string | null = null;
-  hideRecordScreen: boolean = false;
+  hideVideo: boolean = false;
 
   async ngAfterViewInit() {
     // Mute the audio on the main video element
@@ -63,6 +63,7 @@ export class VideoRecorderComponent {
 
     // Reset the volume back to 1 after recording stops
     this.videoElement.nativeElement.volume = 0;
+    this.hideVideo = true; // Set hideVideo to false to show the video element
   }
 
   playRecordedVideo() {
