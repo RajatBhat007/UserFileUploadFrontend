@@ -1,0 +1,14 @@
+<div>
+  <video #videoStream controls width="100%" height="auto" autoplay muted></video>
+  <!-- Add the "Start Recording" and "Stop Recording" buttons -->
+  <!-- <button type="button" class="btn btn-primary" (click)="openVideo();">OpenVideo</button> -->
+  <button type="button" class="btn btn-primary" (click)="startRecording()">Record Video</button>
+  <button type="button" class="btn btn-danger" (click)="stopRecording()" [disabled]="stopBtnDisabled">Stop Recording</button>
+  <!-- Add an empty video element for video preview -->
+  <video #recordedVideoPreview controls autoplay style="display: none; max-width: 100%; height: auto;"></video>
+  <!-- Add the "Cancel" and "Upload" buttons -->
+  <!-- <button type="button" class="btn btn-secondary" (click)="cancelCamera()">Cancel</button> -->
+  
+  <button type="button" class="btn btn-success" (click)="uploadVideo({ name: 'video', type: 'video/webm', lastModified: 2 })">Upload Video</button>
+  <input type="file" #fileInput (change)="handleFileInput($event)">
+</div>

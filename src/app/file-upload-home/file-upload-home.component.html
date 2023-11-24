@@ -1,0 +1,82 @@
+<div class="web-view ">
+   <app-header></app-header>
+   <div class="home_container">
+    <div class="row">
+        <div class="col-3">
+            <div class="d-flex flex-column gap-4">
+                <span class="head_title_web">
+                    <div>File</div> 
+                    <div>Upload</div>
+                </span>
+                <div>
+                    <p class="subtitle_web">
+                        Submit a variety of files through the file upload section and provide approval for submission
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 d-flex flex-column gap-2"> 
+            <div class=" d-flex justify-content-between">
+                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card':'btn_card'">
+                    <div class="card_image">
+                        <img src="assets/images/newUpload.jpeg" alt="new_upload" height="100%" width="100%">
+                    </div>
+                    <div class="btn_title">New Upload</div>
+                </div>
+                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card':'btn_card'">
+                    <div class="card_image">
+                        <img src="assets/images/Approval.jpeg" alt="Approvals"  height="100%" width="100%">
+                    </div>
+                    <div class="btn_title">Approvals</div>
+                </div>
+            </div>
+            <div class="data_container">
+                <div *ngIf="isActiveTabUserUpload==true;then  UserUpload else Approvals "></div>
+                <ng-template #UserUpload>
+                    <app-user-upload></app-user-upload>
+                </ng-template>
+                <ng-template #Approvals>
+                    <app-approvals></app-approvals>
+                </ng-template>
+            </div>
+            
+            
+        </div>
+    </div>
+   </div>
+    
+</div>
+
+<div class="mobile-view">
+    <app-header></app-header>
+    <div class="home_container">
+        <div class="col-12 d-flex flex-column gap-2"> 
+            <div class=" d-flex justify-content-between">
+                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card_mobile':'btn_card_mobile'">
+                    <div class="btn_title">New Upload</div>
+                </div>
+                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card_mobile':'btn_card_mobile'">
+                    <div class="btn_title">Approvals</div>
+                </div>
+            </div>
+            <div class="data_container_mobile">
+                <div *ngIf="isActiveTabUserUpload==true;then  UserUpload else Approvals "></div>
+                <ng-template #UserUpload>
+                    <app-user-upload></app-user-upload>
+                </ng-template>
+                <ng-template #Approvals>
+                    <app-approvals></app-approvals>
+                </ng-template>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+

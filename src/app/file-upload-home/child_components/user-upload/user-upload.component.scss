@@ -1,0 +1,335 @@
+input {
+    border-radius: 20px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 95%;
+    height: 5vh;
+    margin-right: 2%;
+    padding: 2%;
+}
+
+.attachmentButton {
+    border-radius: 100px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 5%;
+    height: 5vh;
+    width: 5vh;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.dropdown-toggle::after {
+    display: none;
+
+}
+
+.attachmentContainer {
+    display: grid;
+    gap: 1em;
+    width: 34vw;
+    place-items: center;
+    grid-template-columns: repeat(4, 1fr);
+
+}
+
+.AttachIcons {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 100%;
+    border: 1px solid #D3D3D3;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+
+    .dropdown-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+    }
+
+
+}
+.AttachIcons input[type="file"] {
+    display: none;
+}
+
+.InnerTabBtn_container {
+    width: 100%;
+    border-bottom: 1px solid #000;
+    margin-bottom: 2vh;
+
+}
+
+.btn_innerTab,
+.btn_InnerTabactive {
+    border-radius: 8px 8px 0px 0px;
+    // border-bottom: 1px solid #000;
+    padding: 1%;
+    color: #000;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    display: flex;
+    align-items: center;
+
+    gap: 0.5em;
+    font-weight: 500;
+    line-height: 20px;
+    /* 125% */
+    letter-spacing: 0.4px;
+
+    .counter {
+        height: 30px;
+        width: 30px;
+        border: 1px solid #000;
+        border-radius: 100%;
+        display: grid;
+        place-items: center;
+    }
+
+}
+
+.btn_InnerTabactive {
+    background: #4872DC;
+    color: #fff;
+
+    .counter {
+        height: 30px;
+        width: 30px;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        display: grid;
+        place-items: center;
+    }
+
+}
+
+.btn_save {
+    border-radius: 12px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn_submit {
+    border-radius: 12px;
+    background: #4872DC;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}
+
+.uploadStatusCard{
+    min-height: 17vh;
+    width: 98%;
+    margin-left: 1%;
+    align-self: center;
+    border-radius: 8px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+
+}
+.uploadStatusCardExtended{
+//    min-height: 70vh;
+height: auto;
+    width: 98%;
+    margin-left: 1%;
+    align-self: center;
+    border-radius: 8px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap:1em;
+
+}
+.priviewUploadContentMobile{
+    border-radius: 7px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    min-height: 10vh;
+    margin-top: 2vh;
+    padding: 1%;
+    width: 100%;
+
+}
+.priviewUploadContentExtendedCard{
+    border-radius: 7px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    min-height: 10vh;
+    margin-top: 2vh;
+    padding: 1%;
+    width: 50%;
+
+
+}
+.gray_container_mobile{
+min-height: 7vh;
+border-radius: 6px;
+background: #D3D3D3;
+width: 100%;
+padding: 2%;
+
+}
+
+.imgContainer{
+    border-radius: 7px;
+border: 0.5px solid #D8D8D8;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.FeedBackdescription{
+    color: #000;
+    font-family: 'Lato', sans-serif;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.24px;
+
+}
+.feedBackEmojiContainer{
+    height: 13vh;
+    width: 50%;
+    display: flex;
+    gap:0.5em
+
+}
+.PopUpImage{
+    height: 100%;
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.successMessage{
+    color: #000;
+text-align: center;
+font-family: 'Lato', sans-serif;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 39px; /* 162.5% */
+letter-spacing: 1.1px;
+}
+.uploadStatusContainer{
+    height: 57vh;
+    width: 100%;
+    overflow-y: auto;
+}
+
+
+
+::ng-deep{
+    .webcam-wrapper, video.mirrored {
+        transform: scaleX(-1);
+        height: 100% !important;
+        width:100% !important;
+    }
+}
+
+@media screen and (min-width:1024.1px) {
+   
+    .mobile-view{
+        display: none;
+    }
+}
+@media screen and (min-width:270px) and (max-width:1024px) {
+    .web-view{
+        display: none;
+    }
+}
+
+// Mobile view Started
+.attachmentButtonMobile{
+    border-radius: 100px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 5%;
+    height: 6vh;
+    width: 6vh;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.attachmentContainerMobile{
+    display: grid;
+    gap: 0.5em;
+    // width: 90vw;
+    place-items: center;
+    grid-template-columns: repeat(4, 1fr);
+
+}
+.AttachIconsMobile{
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 100%;
+    border: 1px solid #D3D3D3;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .dropdown-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+    }
+
+}
+.AttachIconsMobile input[type="file"] {
+    display: none;
+}
+.emojis{
+    height: 50px;;
+    // width: 100px;
+    display: flex;
+    gap:0.5em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.activeEmojis{
+    height: 50px;;
+    // width: 100px;
+    display: flex;
+    gap:0.5em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // transform: scale(1.2);
+
+}
