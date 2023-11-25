@@ -1,5 +1,6 @@
 // app/video-recorder/video-recorder.component.ts
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { FileUploadService } from 'src/app/fileUploadService/file-upload.service';
 
 @Component({
   selector: 'app-video-recorder',
@@ -7,16 +8,24 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./video-recorder.component.scss'],
 })
 export class VideoRecorderComponent {
+  @Output() uploadVideoData: EventEmitter<Blob> = new EventEmitter<Blob>();
   @ViewChild('videoElement', { static: true })
   videoElement!: ElementRef;
   @ViewChild('recordButton', { static: true })
   recordButton!: ElementRef;
+  recording: boolean = false;
 
   private mediaRecorder!: MediaRecorder;
   private recordedChunks: Blob[] = [];
   private stream!: MediaStream;
   public recordedVideoUrl: string | null = null;
   hideVideo: boolean = false;
+  recordingTime: string = '00:00';
+  timerInterval:any;
+  constructor(
+    public http: FileUploadService,
+  
+  ) {}
 
   async ngAfterViewInit() {
     // Mute the audio on the main video element
@@ -40,9 +49,11 @@ export class VideoRecorderComponent {
 
     this.mediaRecorder.onstop = () => {
       const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
-      this.recordedChunks = [];
-
+      // this.recordedChunks = [];
+      
       this.recordedVideoUrl = URL.createObjectURL(blob);
+      console.log( this.recordedVideoUrl);
+
       this.playRecordedVideo();
     };
   }
@@ -54,7 +65,10 @@ export class VideoRecorderComponent {
     // this.videoElement.nativeElement.volume = 0;
 
     this.mediaRecorder.start();
+    this.recording = true;
+
     this.recordButton.nativeElement.disabled = true;
+    this.startTimer();
   }
 
   stopRecording() {
@@ -62,6 +76,8 @@ export class VideoRecorderComponent {
     this.recordButton.nativeElement.disabled = false;
 
     // Reset the volume back to 1 after recording stops
+    this.recording = false;
+    this.recordingTime = '00:00';
     this.videoElement.nativeElement.volume = 0;
     this.hideVideo = true; // Set hideVideo to false to show the video element
   }
@@ -70,7 +86,7 @@ export class VideoRecorderComponent {
     if (this.recordedVideoUrl) {
       const video = document.createElement('video');
       video.width = 640;
-      video.height = 480;
+      video.height = 350;
       video.controls = true;
       video.style.width = '100%';
       video.src = this.recordedVideoUrl;
@@ -78,6 +94,45 @@ export class VideoRecorderComponent {
       // Append the video element to the component's view
       this.videoElement.nativeElement.parentNode.appendChild(video);
     }
+  }
+  startTimer() {
+    let seconds = 0;
+    this.timerInterval = setInterval(() => {
+      seconds++;
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      this.recordingTime = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }, 1000);
+  }
+  uploadVideo() {
+    console.log(this.recordedChunks);
+    
+    const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
+    console.log(blob);
+    
+    const formData = new FormData();
+    formData.append('video', blob, 'recorded_video.webm');
+
+    // const formData = new FormData();
+    // formData.append('video', blob, 'recorded_video.webm');
+
+    // You can now send the FormData object to your server using Angular HttpClient
+    // Example:
+    // this.http.post('your_upload_url', formData).subscribe(
+    //   (response) => {
+    //     console.log('Upload success:', response);
+    //   },
+    //   (error) => {
+    //     console.error('Upload error:', error);
+    //   }
+    // );
+
+    // For demonstration purposes, you can log a simulated upload success
+
+
+    
+    console.log('Simulated upload success:', { success: true });
+    this.uploadVideoData.emit(blob);
   }
 
   ngOnDestroy() {

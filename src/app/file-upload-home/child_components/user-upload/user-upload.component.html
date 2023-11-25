@@ -506,7 +506,9 @@
               <button (click)="startRecording()">Start Recording</button>
               <button (click)="stopRecording()">Stop Recording</button>
               <button (click)="uploadVideo()">Upload Video</button> -->
-              <app-video-recorder></app-video-recorder>
+             <app-video-recorder (uploadVideoData)="handleVideoUpload($event)"></app-video-recorder>
+             
+
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

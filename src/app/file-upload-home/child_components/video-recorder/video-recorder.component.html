@@ -1,26 +1,15 @@
 <!-- app/video-recorder/video-recorder.component.html -->
 <div>
-  <video
-    #videoElement
-    class="w-100"
-    [hidden]="hideVideo"
-    muted
-    autoplay
-  ></video>
-  <br />
-  <button
-    #recordButton
-    [hidden]="hideVideo"
-    (click)="startRecording()"
-    class="btn btn-primary"
-  >
+  <video #videoElement class="w-100" [hidden]="hideVideo" muted autoplay></video>
+  <div *ngIf="recording"  [hidden]="hideVideo"  class="ms-2">{{ recordingTime }}</div>
+  <button #recordButton [hidden]="hideVideo" (click)="startRecording()" class="btn btn-primary">
     Start Recording
   </button>
-  <button
-    [hidden]="hideVideo"
-    (click)="stopRecording()"
-    class="btn btn-danger ms-2"
-  >
+  <button [hidden]="hideVideo" (click)="stopRecording()" class="btn btn-danger ms-2">
     Stop Recording
   </button>
+ 
 </div>
+<button [hidden]="!hideVideo" (click)="uploadVideo()" class="btn btn-danger ms-2">
+  Upload 
+  </button>
