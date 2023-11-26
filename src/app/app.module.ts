@@ -11,6 +11,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {WebcamModule} from 'ngx-webcam';
 import { FormsModule } from '@angular/forms';
 
+
 import { HeaderComponent } from './file-upload-home/child_components/header/header.component';
 import { UserUploadComponent } from './file-upload-home/child_components/user-upload/user-upload.component';
 import { ApprovalsComponent } from './file-upload-home/child_components/approvals/approvals.component';
@@ -39,7 +40,8 @@ import { VideoRecorderComponent } from './file-upload-home/child_components/vide
     MatSelectModule,
     MatFormFieldModule,
     WebcamModule,
-    FormsModule
+    FormsModule,
+  
     
 
   ],

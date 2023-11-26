@@ -11,6 +11,7 @@ import { Observable, Subject } from 'rxjs';
 import { FileUploadService } from 'src/app/fileUploadService/file-upload.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-user-upload',
   templateUrl: './user-upload.component.html',
@@ -46,13 +47,20 @@ export class UserUploadComponent implements OnInit {
   srcUrl: any;
   displayContent: boolean = false;
   fileInput: any;
+  OpenRecoder: boolean=false;
+  CameraModal: boolean=false;
+  openvideoRecorder: boolean=false;
+  submitModalActivated: boolean=false;
+  openSelectManagerCard: boolean=false;
 
   constructor(
     public http: FileUploadService,
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+ 
+  }
   @ViewChild('videoElement')
   videoElement!: ElementRef<any>;
   video!: HTMLVideoElement;
@@ -80,6 +88,8 @@ export class UserUploadComponent implements OnInit {
   uploadBtn!: HTMLElement | null;
   recordedVideoPreview!: HTMLVideoElement | null;
   startRecordingVideo: boolean = false;
+ 
+  
 
   ngOnInit(): void {
     this.getContextData();
@@ -144,9 +154,22 @@ export class UserUploadComponent implements OnInit {
       });
     this.capturedImageDataUrl = '';
   }
+  openCameraModal(){
+    this.CameraModal=true
+    this.openvideoRecorder=false}
+  openVideoRecorderModal(){
+    this.openvideoRecorder=true
+    this.CameraModal=false
 
+  }
+  openSubmitModal(){
+    this.submitModalActivated=true;
+
+  }
+  
   closeCamera() {
     this.showWebcam = false; // Set the flag to false to hide the webcam
+    this.OpenRecoder=false;
 
     if (this.mediaStream) {
       // Stop the video stream
@@ -299,9 +322,9 @@ export class UserUploadComponent implements OnInit {
   // }
 
   uploadVideo() {
-    const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
+    const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
     const formData = new FormData();
-    formData.append('video', blob, 'recorded_video.webm');
+    formData.append('video', blob, 'recorded_video.mp4');
 
     // You can now send the FormData object to your server using Angular HttpClient
     // Example:
@@ -392,6 +415,7 @@ export class UserUploadComponent implements OnInit {
   }
 
   postUploadedData(fileName: any) {
+    console.log(fileName)
     this.fileContext = this.contextName;
     this.sub_type = this.sub_typeFile;
     this.id_user = 1;
@@ -411,7 +435,7 @@ export class UserUploadComponent implements OnInit {
       user_id: this.userID,
       user_message: this.demoMessage,
       receivers_id_user: this.receivers_id_user,
-      uploadedFileName: this.fileName,
+      uploadedFileName: this.uploadedFileName,
       receiver_org_id: this.receiver_org_id,
       receiver_user_id: this.receiver_user_id,
     };
@@ -487,6 +511,9 @@ export class UserUploadComponent implements OnInit {
     this.ViewButtonmessage = 'View More';
     this.selectedCardIndex = index;
   }
+  openVideoRecorderCamera(){
+    this.OpenRecoder=true;
+  }
   downLoadPriview(userUploadData: any, index: any) {
     console.log(userUploadData);
     console.log(userUploadData.file_type);
@@ -552,5 +579,9 @@ export class UserUploadComponent implements OnInit {
     // // this.capturedImageDataUrl = webcamImage.imageAsDataUrl;
     // this.capturedImageName = imageName;
     // this.fileType = webcamImage._mimeType;
+  }
+  openSelectManager(){
+    this.openSelectManagerCard=!this.openSelectManagerCard;
+
   }
 }
