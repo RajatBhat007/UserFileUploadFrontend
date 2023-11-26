@@ -63,7 +63,8 @@ export class ApprovalsComponent implements OnInit {
     this.openViewCard = true;
     this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;
-
+    this.srcUrl=''
+    this.displayContent = false;
     // this.openViewCard=!this.openViewCard;
   }
   ViewLessCard(index: any) {
@@ -92,8 +93,15 @@ export class ApprovalsComponent implements OnInit {
         );
 
         // Concatenate the sanitized base path and file path
-        // this.srcUrl = `${basePath}/${filePath}`;
-        this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+        this.srcUrl = `${basePath}/${filePath}`;
+        if ( userUploadData.file_type === 'video' ) {
+          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+        }else if(userUploadData.file_type === 'image'){
+          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+        }
+        else if(userUploadData.file_type === 'audio'){
+          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`}
+        
 
         console.log(this.srcUrl);
         
