@@ -74,6 +74,7 @@ export class UserUploadComponent implements OnInit {
   ClickedUploadButton: boolean = false;
   showWebcam: boolean = false;
   openViewCard: boolean = false;
+  searchManger:string='';
   selectedCardIndex: number = -1;
   public isRecording: boolean = false;
   private mediaRecorder: MediaRecorder | undefined;
@@ -523,24 +524,24 @@ export class UserUploadComponent implements OnInit {
     console.log(this.srcUrl);
     // removeComment after https applied
     if (this.selectedCardIndex == index) {
-      // if(userUploadData.file_type==='video'||userUploadData.file_type==='audio'||userUploadData.file_type==='image'){
-      //   const basePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.http.urlString);
+      if(userUploadData.file_type==='video'||userUploadData.file_type==='audio'||userUploadData.file_type==='image'){
+        const basePath = this.http.urlString;
 
-      //   // Assuming 'userUploadData?.file_path' is a dynamic path that needs to be sanitized
-      //   const filePath = this.sanitizer.bypassSecurityTrustResourceUrl(userUploadData?.file_path);
+        // Assuming 'userUploadData?.file_path' is a dynamic path that needs to be sanitized
+        const filePath = userUploadData?.file_path;
 
-      //   // Concatenate the sanitized base path and file path
-      //   this.srcUrl = `${basePath}/${filePath}`;
-      //   this.displayContent=!this.displayContent;
-      // }
-      // else{
+        // Concatenate the sanitized base path and file path
+        this.srcUrl = `${basePath}/${filePath}`;
+        this.displayContent=!this.displayContent;
+      }
+      else{
       const link = document.createElement('a');
       this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
       link.href = this.srcUrl;
       link.target = '_blank'; // Open the link in a new tab/window, optional
       link.click();
 
-      // }
+      }
     }
 
     // Create a hidden anchor element
@@ -549,19 +550,13 @@ export class UserUploadComponent implements OnInit {
 
   handleVideoUpload(videoData: Blob) {
     this.contentUploaded = true;
-
-    // Implement your logic to handle the uploaded video data
-    // For example, you can send it to the server using your FileUploadService
-    // this.fileUploadService.uploadVideo(videoData).subscribe(
-    //   (response) => {
-    //     console.log('Upload success:', response);
-    //   },
-    //   (error) => {
-    //     console.error('Upload error:', error);
-    //   }
-    // );
-    console.log('Received video data:', videoData);
-  this.file=videoData;
+    const file = new File(
+      [videoData],
+      `captured_video_${new Date().getTime()}.mp4`,
+      { type: 'video/mp4' }
+    );
+  console.log('Received video data:', videoData);
+  this.file=file;
   console.log( this.file);
   console.log('123',this.fileName);
 
@@ -572,16 +567,17 @@ export class UserUploadComponent implements OnInit {
     console.log('filesize',this.fileSize);
     
      console.log(this.fileName);
-     
-    // Set the captured image data URL for preview
-    // if(this.ClickedUploadButton==true)
-    // this.contentUploaded = true;
-    // // this.capturedImageDataUrl = webcamImage.imageAsDataUrl;
-    // this.capturedImageName = imageName;
-    // this.fileType = webcamImage._mimeType;
+
   }
   openSelectManager(){
     this.openSelectManagerCard=!this.openSelectManagerCard;
+
+  }
+  searchManagerFunction(){
+    console.log(this.searchManger)
+    this.http.searchmanager(this.searchManger).subscribe((res)=>{
+      console.log(res);
+    })
 
   }
 }

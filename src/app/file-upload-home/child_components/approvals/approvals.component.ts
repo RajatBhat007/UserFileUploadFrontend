@@ -92,7 +92,11 @@ export class ApprovalsComponent implements OnInit {
         );
 
         // Concatenate the sanitized base path and file path
-        this.srcUrl = `${basePath}/${filePath}`;
+        // this.srcUrl = `${basePath}/${filePath}`;
+        this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+
+        console.log(this.srcUrl);
+        
         this.displayContent = !this.displayContent;
       } else {
         const link = document.createElement('a');
