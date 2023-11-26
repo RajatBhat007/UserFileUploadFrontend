@@ -372,7 +372,7 @@
       <!-- <span class="counter">2</span> -->
     </div>
   </div>
-  <div *ngIf="newUploadActive==true;then newUploadMobile else  UploadStatus "></div>
+  <div *ngIf="newUploadActive==true;then newUploadMobile else  UploadStatusMobile "></div>
         <ng-template #newUploadMobile>
           <div class="newUploadStatusContainer_mobile">
             <mat-form-field class="col-12">
@@ -557,7 +557,7 @@
                   <span class="">Status</span>
               </div>
           </div>
-          <div class="col-12 d-flex mt-2">
+          <div class="col-12 d-flex mt-3">
               <input type="text"  placeholder="Type a Message"  [(ngModel)]="demoMessage" style="height: 6vh;">
               <div class="btn-group ">
                   <button type="button" class=" btn attachmentButtonMobile  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
@@ -626,45 +626,150 @@
                   </div>
               </div>
           </div>
-          <div class="d-flex justify-content-end gap-2 mt-5">
+          <div class="d-flex justify-content-end gap-2 mt-3 mb-2">
               <button  class="btn btn_save">Save</button>
               <button  class="btn btn_submit"  (click)="postUploadedData('')" (mouseover)="openSubmitModal()"  data-bs-toggle="modal" data-bs-target="#submitPopup">Submit</button>
           </div>
           </div>
          
         </ng-template>
-        <ng-template #UploadStatus>
-          <div class="uploadStatusContainer">
-            <div class="uploadStatusCard mt-2" *ngFor="let userUploadData of DataForUserUploadDetails">
-              <div class="col-2 d-flex justify-content-center align-items-center">
-                <div class="imgContainer">
-                  <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%">
+        <ng-template #UploadStatusMobile>
+          <div class="newUploadStatusContainer_mobile">
+            <div class="mt-2" *ngFor="let userUploadData of DataForUserUploadDetails;let i=index" [ngClass]="{'uploadStatusCardExtended': openViewCard && i === selectedCardIndex, 'uploadStatusCardMobile': !openViewCard || i !== selectedCardIndex}">
+              <div class="d-flex justify-content-between gap-2" style="width: 100%;height: 100%;">
+                <div class="col-3 d-flex justify-content-center align-items-center p-2">
+                  <div class="imgContainer">
+                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%">
+                  </div>
+            
                 </div>
-          
+                <div class="col-8 p-1">
+                  <strong class="d-flex flex-column  mt-2" style="font-size: 1em;" >
+                    <div >{{userUploadData?.file_name}}</div>
+                    <div>{{userUploadData?.file_context}}</div>
+                    <div>{{userUploadData?.sub_type}}</div>
+                  </strong>
+                  
+                  <div class="d-flex gap-2"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
+                        fill="none">
+                        <path
+                          d="M6.993 0C3.129 0 0 2.91333 0 6.50296C0 10.0926 3.129 13.0059 6.993 13.0059C10.864 13.0059 14 10.0926 14 6.50296C14 2.91333 10.864 0 6.993 0ZM7 11.7053C3.906 11.7053 1.4 9.37727 1.4 6.50296C1.4 3.62865 3.906 1.30059 7 1.30059C10.094 1.30059 12.6 3.62865 12.6 6.50296C12.6 9.37727 10.094 11.7053 7 11.7053Z"
+                          fill="black" />
+                        <path d="M7.3498 3.25143H6.2998V7.1532L9.9748 9.20163L10.4998 8.40177L7.3498 6.66548V3.25143Z"
+                          fill="black" />
+                      </svg></span>
+                      <span>{{userUploadData?.upload_datetime|  date:'dd/MM/yyyy'}}</span>
+                  </div>
+                  <p class="FeedBackdescription">{{userUploadData?.feedback?.user_feedback}}</p>
+                  
+                  <div class="feedBackEmojiContainerMobile"*ngIf="userUploadData?.feedback.rating!='1'">
+                    <div class="emojis ">
+                      <img src="../../../../assets/images/Red.png" alt=""  height="100%" width="100%" >
+                     <div style="width: 100%;border-top: 3px solid red;"></div>
+                    </div>
+                   <div class="activeEmojis"  *ngIf="userUploadData?.feedback.rating=='1'">
+                    <img src="../../../../assets/images/redActive.png" alt=""  height="100%" width="100%">
+                    <div style="width: 100%;border-top: 3px solid red;"></div>
+                   
+                   </div>
+                   <div class="emojis" *ngIf="userUploadData?.feedback.rating!='2'">
+                    <img src="../../../../assets/images/Orange.png" alt=""  height="100%" width="100%">
+                    <div style="width: 100%;border-top: 3px solid orange;"></div>
+                    
+                   </div>
+                   <div class="activeEmojis" *ngIf="userUploadData?.feedback.rating=='2'">
+                    <img src="../../../../assets/images/OrangeActive.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid orange;"></div>
+                    
+                   </div>
+                  <div class="emojis" *ngIf="userUploadData?.feedback.rating!='3'">
+                    <img src="../../../../assets/images/Yellow.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid yellow;"></div>
+                  </div>
+                   <div class="activeEmojis" *ngIf="userUploadData?.feedback.rating=='3'">
+                    <img src="../../../../assets/images/YellowActive.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid yellow;"></div>
+                   </div>
+                   <div class="emojis" *ngIf="userUploadData?.feedback.rating!='4'">
+                    <img src="../../../../assets/images/Parot.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid lime;"></div>
+                   </div>
+                  <div class="activeEmojis" *ngIf="userUploadData?.feedback.rating=='4'">
+                    <img src="../../../../assets/images/ParotActive.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid lime;"></div>
+                  </div>
+                   <div class="emojis" *ngIf="userUploadData?.feedback.rating!='5'">
+                    <img src="../../../../assets/images/Green.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid green;"></div>
+                   </div>
+                  <div class="activeEmojis" *ngIf="userUploadData?.feedback.rating=='5'">
+                    <img src="../../../../assets/images/GreenActive.png" alt=""  height="100%" width="100%" >
+                    <div style="width: 100%;border-top: 3px solid green;"></div>
+                  </div>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="col-9">
-                <strong class="d-flex flex-column gap-1 mt-2">
-                  <div>{{userUploadData?.file_name}}</div>
-                  <div>{{userUploadData?.file_context}}</div>
-                  <div>{{userUploadData?.sub_type}}</div>
-                </strong>
+              <div *ngIf="openViewCard && i === selectedCardIndex;then ExtendedCard"></div>
+                  <ng-template #ExtendedCard>
+
+                    <div class="priviewUploadContentExtendedCard mb-2 m-2"  (click)="downLoadPriview(userUploadData,i)" style="width: 95%;">
+            
+                      <div class="gray_container_mobile d-flex align-items-center gap-2">
+                          <div>
+                              <div class="fileIconForPdf">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36" fill="none">
+                                      <path d="M11.5 27H24.5V24H11.5V27ZM11.5 21H24.5V18H11.5V21ZM8.25 33C7.35625 33 6.59115 32.7062 5.95469 32.1187C5.31823 31.5312 5 30.825 5 30V6C5 5.175 5.31823 4.46875 5.95469 3.88125C6.59115 3.29375 7.35625 3 8.25 3H21.25L31 12V30C31 30.825 30.6818 31.5312 30.0453 32.1187C29.4089 32.7062 28.6438 33 27.75 33H8.25ZM19.625 13.5V6H8.25V30H27.75V13.5H19.625Z" fill="black"/>
+                                  </svg>
+                              </div>
+                             
+                          </div>
+                          
+                          <div class="d-flex flex-column gap-1">
+                              <span><b id="fileNameDisplay">{{userUploadData?.file_name}}</b></span>
+                              <span><span >{{fileSize}}</span>|<span ></span>{{userUploadData?.file_type}}</span>
+                          </div>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                          <span class="">Status</span>
+                      </div>
+                  </div>
+                  <div *ngIf="displayContent;then displayContentContainer"></div>
+                  <ng-template #displayContentContainer>
+                    <div class="col-12 d-flex justify-content-center p-3">
+                    
+                     <video [src]="srcUrl" controls height="350px" width="100%" *ngIf='userUploadData?.file_type==="video"'></video>
+                     <audio [src]="srcUrl" controls height="350px" width="100%" *ngIf='userUploadData?.file_type==="audio"'></audio>
+                     <img [src]="srcUrl" alt=""  height="350px" width="100%" *ngIf='userUploadData?.file_type==="image"'>
+                     
+                    </div>
+
+                  </ng-template>
+
+
+                  </ng-template>
+                  
+              
+              <div class="col-12 align-self-end">
+                <button *ngIf="!openViewCard || i !== selectedCardIndex"  (click)="ViewCard(i)" class="btn btn-primary" style="width:100%;height: 3vh;display: flex;justify-content: center;align-items: center;gap:0.5em">
+                  View More<span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </button>
+                <button *ngIf="openViewCard && i === selectedCardIndex"  (click)="ViewLessCard(i)" class="btn btn-primary" style="width:100%;height: 3vh;display: flex;justify-content: center;align-items: center;gap:0.5em">
+                  View Less<span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M3 7.5L6 4.5L9 7.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </button>
                 
-                <div class="d-flex gap-2"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
-                      fill="none">
-                      <path
-                        d="M6.993 0C3.129 0 0 2.91333 0 6.50296C0 10.0926 3.129 13.0059 6.993 13.0059C10.864 13.0059 14 10.0926 14 6.50296C14 2.91333 10.864 0 6.993 0ZM7 11.7053C3.906 11.7053 1.4 9.37727 1.4 6.50296C1.4 3.62865 3.906 1.30059 7 1.30059C10.094 1.30059 12.6 3.62865 12.6 6.50296C12.6 9.37727 10.094 11.7053 7 11.7053Z"
-                        fill="black" />
-                      <path d="M7.3498 3.25143H6.2998V7.1532L9.9748 9.20163L10.4998 8.40177L7.3498 6.66548V3.25143Z"
-                        fill="black" />
-                    </svg></span>
-                    <span>{{userUploadData?.upload_datetime|  date:'dd/MM/yyyy'}}</span>
-                </div>
-                <p class="FeedBackdescription">{{userUploadData?.feedback?.user_feedback}}</p>
-                <div class="feedBackEmojiContainer">
-                  <img src="assets/images/feedbackEmojis.jpeg" alt="emoji" height="100%" width="100%">
-                </div>
               </div>
+             
             </div>
+           
           </div>
           
          

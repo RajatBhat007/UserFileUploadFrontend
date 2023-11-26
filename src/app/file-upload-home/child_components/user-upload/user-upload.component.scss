@@ -149,6 +149,20 @@ input {
     gap:1em;
 
 }
+.uploadStatusCardMobile{
+    min-height: 17vh;
+    width: 98%;
+    margin-left: 1%;
+    align-self: center;
+    border-radius: 8px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+
+}
 .uploadStatusCardExtended{
 //    min-height: 70vh;
 height: auto;
@@ -219,6 +233,13 @@ letter-spacing: -0.24px;
     gap:0.5em
 
 }
+.feedBackEmojiContainerMobile{
+    height: 13vh;
+    width: 100%;
+    display: flex;
+    gap:0.5em
+
+}
 .PopUpImage{
     height: 100%;
     width: 100%;
@@ -240,14 +261,16 @@ line-height: 39px; /* 162.5% */
 letter-spacing: 1.1px;
 }
 .uploadStatusContainer{
-    height: 57vh;
+    height: 72vh;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .newUploadStatusContainer_mobile{
     height: 73vh;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 
 }
 
