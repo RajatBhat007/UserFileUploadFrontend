@@ -501,9 +501,9 @@ export class UserUploadComponent implements OnInit {
     });
   }
   getUserUploadDetails() {
-    this.id_user = 1;
-    this.org_id = 1;
-    this.userID = 'TGC';
+    this.id_user = this.id_user_FromQueryparams;
+    this.org_id = this.org_id_FromQueryparams;
+    this.userID = this.userID_FromQueryparams;
     let body = {
       id_user: this.id_user,
       org_id: this.org_id,
@@ -550,7 +550,8 @@ export class UserUploadComponent implements OnInit {
   }
   ViewCard(index: any) {
     console.log(index);
-
+    this.srcUrl=''
+    this.displayContent = false;
     this.openViewCard = true;
     this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;

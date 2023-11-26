@@ -27,6 +27,9 @@ export class ApprovalsComponent implements OnInit {
   displayContent: boolean = false;
   srcUrl: any;
   fileSize: any;
+  id_user_FromQueryparams: any;
+  org_id_FromQueryparams: any;
+  userID_FromQueryparams: any;
   constructor(
     private http: FileUploadService,
     private sanitizer: DomSanitizer
@@ -34,11 +37,19 @@ export class ApprovalsComponent implements OnInit {
   ngOnInit(): void {
     this.listApprovalsActive = true;
     this.getApprovalsListDetails();
+    localStorage.setItem('_id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('_org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
+    localStorage.setItem('_userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
+    
   }
   getApprovalsListDetails() {
-    this.reciever_id_user = 2;
-    this.reciever_org_id = 2;
-    this.reciever_userID = 'tcs';
+    
+    this.reciever_id_user =  localStorage.getItem('_id_user');
+
+    this.reciever_org_id = localStorage.getItem('_org_id');
+    this.reciever_userID =  localStorage.getItem('_userID');
+
+    console.log(this.reciever_id_user,this.reciever_org_id,this.reciever_userID)
     let body = {
       id_user: this.reciever_id_user,
       org_id: this.reciever_org_id,
