@@ -17,6 +17,7 @@ import { ApprovalsComponent } from './file-upload-home/child_components/approval
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VideoRecorderComponent } from './file-upload-home/child_components/video-recorder/video-recorder.component';
 import { AudioRecorderComponent } from './file-upload-home/child_components/audio-recorder/audio-recorder.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 
@@ -45,7 +46,7 @@ import { AudioRecorderComponent } from './file-upload-home/child_components/audi
     
 
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

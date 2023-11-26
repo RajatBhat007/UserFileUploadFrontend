@@ -10,6 +10,7 @@ import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 import { FileUploadService } from 'src/app/fileUploadService/file-upload.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-upload',
@@ -46,12 +47,16 @@ export class UserUploadComponent implements OnInit {
   srcUrl: any;
   displayContent: boolean = false;
   fileInput: any;
+  id_user_FromQueryparams: any;
+  org_id_FromQueryparams: any;
+  userID_FromQueryparams: any;
 
   constructor(
     public http: FileUploadService,
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public _router: ActivatedRoute,
   ) {}
   @ViewChild('videoElement')
   videoElement!: ElementRef<any>;
@@ -80,7 +85,7 @@ export class UserUploadComponent implements OnInit {
   uploadBtn!: HTMLElement | null;
   recordedVideoPreview!: HTMLVideoElement | null;
   startRecordingVideo: boolean = false;
-
+  location: any
   ngOnInit(): void {
     this.getContextData();
 
@@ -93,7 +98,52 @@ export class UserUploadComponent implements OnInit {
     // this.uploadBtn = document.getElementById('uploadBtnRecorder');
     // this.recordedVideoPreview = document.getElementById('recordedVideoPreview');
     // this.mediaRecorder = null;
+
+    this.location = window.location.href
+    var url = new URL(this.location)
+
+    console.log(url);
+    // this.id_user = 1;
+    // this.org_id = 1;
+    // this.userID = 'TGC';
+    var checkUserID = this._router.queryParams.subscribe(params => {
+      console.log(params);
+
+    this.id_user_FromQueryparams = params['_id_user'];
+    this.org_id_FromQueryparams  = params['_org_id'];
+    this.userID_FromQueryparams  = params['_userID'];
+ console.log( this.id_user_FromQueryparams, this.org_id_FromQueryparams,this.userID_FromQueryparams  );
+    localStorage.setItem('_id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('_org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
+    localStorage.setItem('_userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
+
+  })
+    // this._game = params['_game'];
+    // this._userid = params['_userid']
+    // this._team = params['_team']
+    // this._game_name = params['_game_name'],
+    // this._team_name = params['_team_name'],
+    // this._kpi_name = params['_kpi_name'],
+    // this._isAttemted = params['_isAttemted'],
+    // this._isCorrect = params['_isCorrect']
+    // console.log(this._team);
+    // console.log(this._userid);
+    // console.log(this._game_name, this._team_name, this._kpi_name, this._isAttemted, this._isCorrect);
+
+    // localStorage.setItem('_game', this._game.replace(/\s/g, '+'));
+    // localStorage.setItem('_userid', this._userid.replace(/\s/g, '+'));
+    // localStorage.setItem('_team', this._team.replace(/\s/g, '+'));
+    // localStorage.setItem('_game_name', this._game_name.replace(/\s/g, '+'));
+    // localStorage.setItem('_team_name', this._team_name.replace(/\s/g, '+'));
+    // localStorage.setItem('_kpi_name', this._kpi_name.replace(/\s/g, '+'));
+    // localStorage.setItem('_isAttemted', this._isAttemted.replace(/\s/g, '+'));
+    // localStorage.setItem('_isCorrect', this._isCorrect.replace(/\s/g, '+'));
+
+
+
   }
+
+
   public trigger: Subject<void> = new Subject<void>();
   public videoOptions: MediaTrackConstraints = {
     facingMode: 'environment', // Use 'user' for front camera, 'environment' for rear camera
@@ -394,9 +444,13 @@ export class UserUploadComponent implements OnInit {
   postUploadedData(fileName: any) {
     this.fileContext = this.contextName;
     this.sub_type = this.sub_typeFile;
-    this.id_user = 1;
-    this.org_id = 1;
-    this.userID = 'TGC';
+    this.id_user = this.id_user_FromQueryparams;
+    this.org_id = this.org_id_FromQueryparams;
+    this.userID = this.userID_FromQueryparams;
+
+    // this.id_user = 1;
+    // this.org_id = 1;
+    // this.userID = 'TGC';
     this.inputMessage = this.demoMessage;
     this.receivers_id_user = 2;
     this.uploadedFileName = this.fileName;
@@ -532,8 +586,8 @@ export class UserUploadComponent implements OnInit {
   console.log( this.file);
   console.log('123',this.fileName);
 
-    const videoName = `captured_video_${new Date().getTime()}.mp4`;
-    this.fileName = videoName;
+    const imageName = `captured_video_${new Date().getTime()}.mp4`;
+    this.fileName = imageName;
     this.fileSize=this.formatFileSize(this.file.size);
     this.fileType=this.file.type
     console.log('filesize',this.fileSize);

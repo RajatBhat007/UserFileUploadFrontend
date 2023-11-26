@@ -27,9 +27,7 @@ export class FileUploadService {
   postUserUpload(data:any,file:any){
     console.log(data);
     const formData= new FormData();
-    // formData.append('file',file?file:this.fileData)
-    formData.append('file', file, 'recorded-video.mp4');
-
+    formData.append('file',file?file:this.fileData)
     formData.append('user_message',data.user_message)
      var tempurl=`${this.urlString}/useruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&receivers_id_user=${data.receivers_id_user}&receiver_org_id=${data.receiver_org_id}&receiver_user_id=${data.receiver_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}`;
     return this.Http.post(tempurl,formData)
