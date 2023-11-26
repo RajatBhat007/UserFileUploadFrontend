@@ -16,6 +16,7 @@ import { UserUploadComponent } from './file-upload-home/child_components/user-up
 import { ApprovalsComponent } from './file-upload-home/child_components/approvals/approvals.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VideoRecorderComponent } from './file-upload-home/child_components/video-recorder/video-recorder.component';
+import { AudioRecorderComponent } from './file-upload-home/child_components/audio-recorder/audio-recorder.component';
 
 
 
@@ -27,6 +28,7 @@ import { VideoRecorderComponent } from './file-upload-home/child_components/vide
     UserUploadComponent,
     ApprovalsComponent,
     VideoRecorderComponent,
+    AudioRecorderComponent,
 
     
    

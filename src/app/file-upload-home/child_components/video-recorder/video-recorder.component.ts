@@ -107,11 +107,11 @@ export class VideoRecorderComponent {
   uploadVideo() {
     console.log(this.recordedChunks);
     
-    const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
+    const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
     console.log(blob);
     
     const formData = new FormData();
-    formData.append('video', blob, 'recorded_video.webm');
+    formData.append('video', blob, 'recorded_video.mp4');
 
     // const formData = new FormData();
     // formData.append('video', blob, 'recorded_video.webm');

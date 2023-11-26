@@ -522,19 +522,13 @@ export class UserUploadComponent implements OnInit {
 
   handleVideoUpload(videoData: Blob) {
     this.contentUploaded = true;
-
-    // Implement your logic to handle the uploaded video data
-    // For example, you can send it to the server using your FileUploadService
-    // this.fileUploadService.uploadVideo(videoData).subscribe(
-    //   (response) => {
-    //     console.log('Upload success:', response);
-    //   },
-    //   (error) => {
-    //     console.error('Upload error:', error);
-    //   }
-    // );
-    console.log('Received video data:', videoData);
-  this.file=videoData;
+    const file = new File(
+      [videoData],
+      `captured_video_${new Date().getTime()}.mp4`,
+      { type: 'video/mp4' }
+    );
+  console.log('Received video data:', videoData);
+  this.file=file;
   console.log( this.file);
   console.log('123',this.fileName);
 
@@ -545,12 +539,6 @@ export class UserUploadComponent implements OnInit {
     console.log('filesize',this.fileSize);
     
      console.log(this.fileName);
-     
-    // Set the captured image data URL for preview
-    // if(this.ClickedUploadButton==true)
-    // this.contentUploaded = true;
-    // // this.capturedImageDataUrl = webcamImage.imageAsDataUrl;
-    // this.capturedImageName = imageName;
-    // this.fileType = webcamImage._mimeType;
+
   }
 }
