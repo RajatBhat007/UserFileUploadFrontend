@@ -158,3 +158,19 @@ letter-spacing: -0.24px;
     width: 100%;
     overflow-y: auto;
 }
+@media screen and (min-width:1024.1px) {
+   
+    .mobile-view{
+        display: none;
+    }
+}
+@media screen and (min-width:270px) and (max-width:1024px) {
+    .web-view{
+        display: none;
+    }
+    .ApproveListContainer,.ApproveHistoryContainer{
+        height: 70vh;
+        width: 100%;
+        overflow-y: auto;
+    }
+}
