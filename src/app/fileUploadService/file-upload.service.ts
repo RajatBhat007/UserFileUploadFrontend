@@ -12,7 +12,7 @@ export class FileUploadService {
 
   constructor(private Http:HttpClient) { }
 
-  urlString="http://3.109.140.126";
+  urlString="https://connectopia.app:8080";
   fileData:any;
   videoContentUploaded:boolean=false;
   openVideo:boolean=false;

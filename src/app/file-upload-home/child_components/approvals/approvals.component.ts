@@ -71,6 +71,8 @@ export class ApprovalsComponent implements OnInit {
     this.openViewCard = false;
     this.ViewButtonmessage = 'View More';
     this.selectedCardIndex = index;
+    this.srcUrl=''
+    this.displayContent = false;
   }
   downLoadPriview(userUploadData: any, index: any) {
     console.log(userUploadData);

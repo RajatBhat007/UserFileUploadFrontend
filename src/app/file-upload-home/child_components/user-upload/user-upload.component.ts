@@ -96,16 +96,6 @@ export class UserUploadComponent implements OnInit {
   ngOnInit(): void {
     this.getContextData();
 
-    // this.setupMediaRecorder();
-    // this.modal = document.getElementById('exampleModalRecordVideo');
-    // this.video = this.videoElement.nativeElement;
-    // this.startRecordingBtn = document.getElementById('startRecordingBtn');
-    // this.stopRecordingBtn = document.getElementById('stopRecordingBtn');
-    // this.cancelBtn = document.getElementById('cancelBtnRecoder');
-    // this.uploadBtn = document.getElementById('uploadBtnRecorder');
-    // this.recordedVideoPreview = document.getElementById('recordedVideoPreview');
-    // this.mediaRecorder = null;
-
     this.location = window.location.href
     var url = new URL(this.location)
 
@@ -554,13 +544,16 @@ export class UserUploadComponent implements OnInit {
     this.openViewCard = true;
     this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;
-
+    this.srcUrl=''
+    this.displayContent = false;
     // this.openViewCard=!this.openViewCard;
   }
   ViewLessCard(index: any) {
     this.openViewCard = false;
     this.ViewButtonmessage = 'View More';
     this.selectedCardIndex = index;
+    this.srcUrl=''
+    this.displayContent = false;
   }
   openVideoRecorderCamera(){
     this.OpenRecoder=true;
