@@ -56,7 +56,9 @@ export class UserUploadComponent implements OnInit {
   submitModalActivated: boolean=false;
   OpenRecoder: boolean=false;
   openSelectManagerCard: boolean=false;
-
+  displayuser:boolean=false;
+  Addbutton:string='Add +'
+  hideaddButton: boolean=true;
   constructor(
     public http: FileUploadService,
     private renderer: Renderer2,
@@ -94,59 +96,24 @@ export class UserUploadComponent implements OnInit {
   startRecordingVideo: boolean = false;
   location: any
   ngOnInit(): void {
-    this.getContextData();
-
-    // this.setupMediaRecorder();
-    // this.modal = document.getElementById('exampleModalRecordVideo');
-    // this.video = this.videoElement.nativeElement;
-    // this.startRecordingBtn = document.getElementById('startRecordingBtn');
-    // this.stopRecordingBtn = document.getElementById('stopRecordingBtn');
-    // this.cancelBtn = document.getElementById('cancelBtnRecoder');
-    // this.uploadBtn = document.getElementById('uploadBtnRecorder');
-    // this.recordedVideoPreview = document.getElementById('recordedVideoPreview');
-    // this.mediaRecorder = null;
 
     this.location = window.location.href
     var url = new URL(this.location)
 
     console.log(url);
-    // this.id_user = 1;
-    // this.org_id = 1;
-    // this.userID = 'TGC';
     var checkUserID = this._router.queryParams.subscribe(params => {
       console.log(params);
 
-    this.id_user_FromQueryparams = params['_id_user'];
-    this.org_id_FromQueryparams  = params['_org_id'];
-    this.userID_FromQueryparams  = params['_userID'];
+    this.id_user_FromQueryparams = params['id_user'];
+    this.org_id_FromQueryparams  = params['org_id'];
+    this.userID_FromQueryparams  = params['userID'];
  console.log( this.id_user_FromQueryparams, this.org_id_FromQueryparams,this.userID_FromQueryparams  );
-    localStorage.setItem('_id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
-    localStorage.setItem('_org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
-    localStorage.setItem('_userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
+    localStorage.setItem('userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
 
   })
-    // this._game = params['_game'];
-    // this._userid = params['_userid']
-    // this._team = params['_team']
-    // this._game_name = params['_game_name'],
-    // this._team_name = params['_team_name'],
-    // this._kpi_name = params['_kpi_name'],
-    // this._isAttemted = params['_isAttemted'],
-    // this._isCorrect = params['_isCorrect']
-    // console.log(this._team);
-    // console.log(this._userid);
-    // console.log(this._game_name, this._team_name, this._kpi_name, this._isAttemted, this._isCorrect);
-
-    // localStorage.setItem('_game', this._game.replace(/\s/g, '+'));
-    // localStorage.setItem('_userid', this._userid.replace(/\s/g, '+'));
-    // localStorage.setItem('_team', this._team.replace(/\s/g, '+'));
-    // localStorage.setItem('_game_name', this._game_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_team_name', this._team_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_kpi_name', this._kpi_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_isAttemted', this._isAttemted.replace(/\s/g, '+'));
-    // localStorage.setItem('_isCorrect', this._isCorrect.replace(/\s/g, '+'));
-
-
+  this.getContextData();
 
   }
 
@@ -323,36 +290,6 @@ export class UserUploadComponent implements OnInit {
 
   startRecording() {
     this.startRecordingVideo = true;
-    // this.recordedChunks = [];
-    // const options = { mimeType: 'video/webm; codecs=vp9' };
-    // if (this.video) {
-    //   this.mediaRecorder = new MediaRecorder(this.video.srcObject as MediaStream, options);
-
-    //   this.mediaRecorder.ondataavailable = (event) => {
-    //     if (event.data.size > 0) {
-    //       this.recordedChunks.push(event.data);
-    //     }
-    //   };
-
-    //   this.mediaRecorder.onstop = () => {
-    //     const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
-    //     const url = URL.createObjectURL(blob);
-
-    //     if (this.recordedVideoPreview) {
-    //       this.recordedVideoPreview.src = url;
-    //       this.recordedVideoPreview.style.display = 'block';
-    //     }
-
-    //     // if (this.startRecordingBtn) this.startRecordingBtn.disabled = false;
-    //     // if (this.stopRecordingBtn) this.stopRecordingBtn.disabled = true;
-    //     // if (this.uploadBtn) this.uploadBtn.disabled = false;
-    //   };
-
-    //   this.mediaRecorder.start();
-    //   // if (this.startRecordingBtn) this.startRecordingBtn.disabled = true;
-    //   // if (this.stopRecordingBtn) this.stopRecordingBtn.disabled = false;
-    //   // if (this.uploadBtn) this.uploadBtn.disabled = true;
-    // }
   }
 
   stopRecording() {
@@ -434,7 +371,7 @@ export class UserUploadComponent implements OnInit {
   }
 
   getContextData() {
-    this.ordId = 1;
+    this.ordId = this.org_id_FromQueryparams;
     this.http.getContext(this.ordId).subscribe((res) => {
       this.contextData = res;
       console.log(this.contextData);
@@ -468,15 +405,11 @@ export class UserUploadComponent implements OnInit {
     this.id_user = this.id_user_FromQueryparams;
     this.org_id = this.org_id_FromQueryparams;
     this.userID = this.userID_FromQueryparams;
-
-    // this.id_user = 1;
-    // this.org_id = 1;
-    // this.userID = 'TGC';
     this.inputMessage = this.demoMessage;
-    this.receivers_id_user = 2;
+    this.receivers_id_user = 12012;
     this.uploadedFileName = this.fileName;
-    this.receiver_org_id = 2;
-    this.receiver_user_id = 'tcs';
+    this.receiver_org_id = 117;
+    this.receiver_user_id = 'S10942_BA';
     console.log(this.uploadedFileName);
     let body = {
       file_context: this.contextName,
@@ -625,10 +558,20 @@ export class UserUploadComponent implements OnInit {
 
   }
   searchManagerFunction(){
-    console.log(this.searchManger)
-    this.http.searchmanager(this.searchManger).subscribe((res)=>{
-      console.log(res);
-    })
+    if (this.searchManger.length>4) {
+      this.displayuser=true;
 
+    }
+    console.log(this.searchManger)
+    // this.http.searchmanager(this.searchManger).subscribe((res)=>{
+    //   console.log(res);
+    // })
+
+  }
+  addUSer(){
+    this.searchManger='R Sharma';
+    this.hideaddButton=false
+    
+    this.Addbutton='Remove';
   }
 }

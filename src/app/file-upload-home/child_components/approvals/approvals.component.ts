@@ -37,17 +37,17 @@ export class ApprovalsComponent implements OnInit {
   ngOnInit(): void {
     this.listApprovalsActive = true;
     this.getApprovalsListDetails();
-    localStorage.setItem('_id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
-    localStorage.setItem('_org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
-    localStorage.setItem('_userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
+    localStorage.setItem('org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
+    localStorage.setItem('userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
     
   }
   getApprovalsListDetails() {
     
-    this.reciever_id_user =  localStorage.getItem('_id_user');
+    this.reciever_id_user =  localStorage.getItem('id_user');
 
-    this.reciever_org_id = localStorage.getItem('_org_id');
-    this.reciever_userID =  localStorage.getItem('_userID');
+    this.reciever_org_id = localStorage.getItem('org_id');
+    this.reciever_userID =  localStorage.getItem('userID');
 
     console.log(this.reciever_id_user,this.reciever_org_id,this.reciever_userID)
     let body = {
