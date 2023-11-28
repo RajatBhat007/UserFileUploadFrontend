@@ -2,15 +2,30 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
+  id_user_FromQueryparams: any;
+  org_id_FromQueryparams: any;
+  userID_FromQueryparams: any;
+  params: any;
+
+  constructor(private Http:HttpClient,private route: ActivatedRoute) {
+   this.route.queryParams.subscribe(params => {
+      this.id_user_FromQueryparams = params['id_user'];
+      this.org_id_FromQueryparams = params['org_id'];
+      this.userID_FromQueryparams = params['userID'];
+    });
+
+    
+    
+  }
 
 
-  constructor(private Http:HttpClient) { }
 
   //urlString="http://3.109.140.126";
   urlString="https://connectopia.app:8080"

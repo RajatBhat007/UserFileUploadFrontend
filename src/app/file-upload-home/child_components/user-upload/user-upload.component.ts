@@ -43,7 +43,7 @@ export class UserUploadComponent implements OnInit {
   receiver_user_id: any;
   DataForUserUploadDetails: any;
   file: any;
-  successMessage: any = 'Please Upload a Correct Data';
+  successMessage: any = 'Something Went Wrong!!!';
   ViewButtonmessage: string = 'view More';
   srcUrl: any;
   displayContent: boolean = false;
@@ -56,6 +56,7 @@ export class UserUploadComponent implements OnInit {
   submitModalActivated: boolean=false;
   OpenRecoder: boolean=false;
   openSelectManagerCard: boolean=false;
+  disabledSubmitBtn:boolean=true;
 
   constructor(
     public http: FileUploadService,
@@ -92,60 +93,36 @@ export class UserUploadComponent implements OnInit {
   uploadBtn!: HTMLElement | null;
   recordedVideoPreview!: HTMLVideoElement | null;
   startRecordingVideo: boolean = false;
-  location: any
+  location: any;
+
+
+  listOfManagers=[{
+    'name':'Shubham karad',
+    'emailId':'shubham.karad12@gmail.com',
+    'EmployeeId':'TGC127'
+  },
+  {
+    'name':'Rajat Bhat',
+    'emailId':'rajat1995@gmail.com',
+    'EmployeeId':'TGC093'
+
+  },
+  {
+    'name':'Shubham Dhekolkar',
+    'emailId':'shubhamd26@gmail.com',
+    'EmployeeId':'TGC117'
+
+  }
+];
   ngOnInit(): void {
     this.getContextData();
-
-    // this.setupMediaRecorder();
-    // this.modal = document.getElementById('exampleModalRecordVideo');
-    // this.video = this.videoElement.nativeElement;
-    // this.startRecordingBtn = document.getElementById('startRecordingBtn');
-    // this.stopRecordingBtn = document.getElementById('stopRecordingBtn');
-    // this.cancelBtn = document.getElementById('cancelBtnRecoder');
-    // this.uploadBtn = document.getElementById('uploadBtnRecorder');
-    // this.recordedVideoPreview = document.getElementById('recordedVideoPreview');
-    // this.mediaRecorder = null;
-
+    
     this.location = window.location.href
     var url = new URL(this.location)
 
     console.log(url);
-    // this.id_user = 1;
-    // this.org_id = 1;
-    // this.userID = 'TGC';
-    var checkUserID = this._router.queryParams.subscribe(params => {
-      console.log(params);
-
-    this.id_user_FromQueryparams = params['_id_user'];
-    this.org_id_FromQueryparams  = params['_org_id'];
-    this.userID_FromQueryparams  = params['_userID'];
- console.log( this.id_user_FromQueryparams, this.org_id_FromQueryparams,this.userID_FromQueryparams  );
-    localStorage.setItem('_id_user', this.id_user_FromQueryparams.replace(/\s/g, '+'));
-    localStorage.setItem('_org_id', this.org_id_FromQueryparams .replace(/\s/g, '+'));
-    localStorage.setItem('_userID', this.userID_FromQueryparams.replace(/\s/g, '+'));
-
-  })
-    // this._game = params['_game'];
-    // this._userid = params['_userid']
-    // this._team = params['_team']
-    // this._game_name = params['_game_name'],
-    // this._team_name = params['_team_name'],
-    // this._kpi_name = params['_kpi_name'],
-    // this._isAttemted = params['_isAttemted'],
-    // this._isCorrect = params['_isCorrect']
-    // console.log(this._team);
-    // console.log(this._userid);
-    // console.log(this._game_name, this._team_name, this._kpi_name, this._isAttemted, this._isCorrect);
-
-    // localStorage.setItem('_game', this._game.replace(/\s/g, '+'));
-    // localStorage.setItem('_userid', this._userid.replace(/\s/g, '+'));
-    // localStorage.setItem('_team', this._team.replace(/\s/g, '+'));
-    // localStorage.setItem('_game_name', this._game_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_team_name', this._team_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_kpi_name', this._kpi_name.replace(/\s/g, '+'));
-    // localStorage.setItem('_isAttemted', this._isAttemted.replace(/\s/g, '+'));
-    // localStorage.setItem('_isCorrect', this._isCorrect.replace(/\s/g, '+'));
-
+   
+  
 
 
   }
@@ -227,27 +204,7 @@ export class UserUploadComponent implements OnInit {
     this.showWebcam = true; // Set the flag to true to show the webcam
     this.capturedImageDataUrl = ''; // Clear the captured image data URL
   }
-  // uploadImage(webcamImage: any) {
-  //   this.closeCamera();
-  //   console.log('Captured image:', webcamImage);
-  //   const imageName = `captured_image_${new Date().getTime()}.png`;
-
-  //   // Set the captured image data URL for preview
-  //   // if(this.ClickedUploadButton==true)
-  //   this.contentUploaded = true;
-  //   this.capturedImageDataUrl = webcamImage.imageAsDataUrl;
-  //   this.capturedImageName = imageName;
-  //   this.fileType = webcamImage._mimeType;
-  //   this.fileName = this.capturedImageName;
-  //   console.log(console.log(this.fileName))
-  //   this.file=webcamImage;
-  //   // Calculate file size
-  //   const binaryData = atob(this.capturedImageDataUrl.split(',')[1]);
-  //   console.log(binaryData);
-  //   const fileSizeInBytes = binaryData.length;
-  //   // console.log('File Size:', fileSizeInBytes, 'bytes', fileSizeInKB, 'KB', fileSizeInMB, 'MB');
-  //   this.fileSize = this.formatFileSize(fileSizeInBytes)
-  // }
+  
   // Modify your uploadImage function
   uploadImage() {
     this.closeCamera();
@@ -323,36 +280,7 @@ export class UserUploadComponent implements OnInit {
 
   startRecording() {
     this.startRecordingVideo = true;
-    // this.recordedChunks = [];
-    // const options = { mimeType: 'video/webm; codecs=vp9' };
-    // if (this.video) {
-    //   this.mediaRecorder = new MediaRecorder(this.video.srcObject as MediaStream, options);
-
-    //   this.mediaRecorder.ondataavailable = (event) => {
-    //     if (event.data.size > 0) {
-    //       this.recordedChunks.push(event.data);
-    //     }
-    //   };
-
-    //   this.mediaRecorder.onstop = () => {
-    //     const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
-    //     const url = URL.createObjectURL(blob);
-
-    //     if (this.recordedVideoPreview) {
-    //       this.recordedVideoPreview.src = url;
-    //       this.recordedVideoPreview.style.display = 'block';
-    //     }
-
-    //     // if (this.startRecordingBtn) this.startRecordingBtn.disabled = false;
-    //     // if (this.stopRecordingBtn) this.stopRecordingBtn.disabled = true;
-    //     // if (this.uploadBtn) this.uploadBtn.disabled = false;
-    //   };
-
-    //   this.mediaRecorder.start();
-    //   // if (this.startRecordingBtn) this.startRecordingBtn.disabled = true;
-    //   // if (this.stopRecordingBtn) this.stopRecordingBtn.disabled = false;
-    //   // if (this.uploadBtn) this.uploadBtn.disabled = true;
-    // }
+   
   }
 
   stopRecording() {
@@ -361,29 +289,13 @@ export class UserUploadComponent implements OnInit {
     }
   }
 
-  // cancelCamera() {
-  //   if (this.video) {
-  //     this.video.srcObject?.getTracks().forEach((track: { stop: () => any; }) => track.stop());
-  //     if (this.modal) this.modal.style.display = 'none';
-  //   }
-  // }
 
   uploadVideo() {
     const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
     const formData = new FormData();
     formData.append('video', blob, 'recorded_video.mp4');
 
-    // You can now send the FormData object to your server using Angular HttpClient
-    // Example:
-    // this.httpClient.post('your_upload_url', formData).subscribe(
-    //   (response) => {
-    //     console.log('Upload success:', response);
-    //   },
-    //   (error) => {
-    //     console.error('Upload error:', error);
-    //   }
-    // );
-
+ 
     // For demonstration purposes, you can log a simulated upload success
     console.log('Simulated upload success:', { success: true });
   }
@@ -452,6 +364,7 @@ export class UserUploadComponent implements OnInit {
       this.subCategoryData = res;
       if (this.subCategoryData) {
         this.isSubCategoryDataHere = false;
+        
       }
     });
   }
@@ -465,13 +378,10 @@ export class UserUploadComponent implements OnInit {
     console.log(fileName)
     this.fileContext = this.contextName;
     this.sub_type = this.sub_typeFile;
-    this.id_user = this.id_user_FromQueryparams;
-    this.org_id = this.org_id_FromQueryparams;
-    this.userID = this.userID_FromQueryparams;
+    this.id_user = this.http.id_user_FromQueryparams;
+    this.org_id = this.http.org_id_FromQueryparams;
+    this.userID = this.http.userID_FromQueryparams;
 
-    // this.id_user = 1;
-    // this.org_id = 1;
-    // this.userID = 'TGC';
     this.inputMessage = this.demoMessage;
     this.receivers_id_user = 2;
     this.uploadedFileName = this.fileName;
@@ -501,9 +411,9 @@ export class UserUploadComponent implements OnInit {
     });
   }
   getUserUploadDetails() {
-    this.id_user = this.id_user_FromQueryparams;
-    this.org_id = this.org_id_FromQueryparams;
-    this.userID = this.userID_FromQueryparams;
+    this.id_user = this.http.id_user_FromQueryparams;
+    this.org_id = this.http.org_id_FromQueryparams;
+    this.userID = this.http.userID_FromQueryparams;
     let body = {
       id_user: this.id_user,
       org_id: this.org_id,
@@ -629,6 +539,20 @@ export class UserUploadComponent implements OnInit {
     this.http.searchmanager(this.searchManger).subscribe((res)=>{
       console.log(res);
     })
+
+  }
+  addedManager:any=[]
+  addManager(data:any){
+    console.log(data);
+    this.addedManager.push(data);
+    console.log(this.addedManager)
+  }
+  deletemanger(data:any,index:any){
+    if(this.addedManager){
+      this.addedManager.splice(index, 1);
+      console.log(this.addedManager);
+    }
+   
 
   }
 }
