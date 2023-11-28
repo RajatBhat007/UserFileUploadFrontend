@@ -57,6 +57,7 @@ export class UserUploadComponent implements OnInit {
   OpenRecoder: boolean=false;
   openSelectManagerCard: boolean=false;
   disabledSubmitBtn:boolean=true;
+  displayuser: boolean=false;
 
   constructor(
     public http: FileUploadService,
@@ -346,7 +347,7 @@ export class UserUploadComponent implements OnInit {
   }
 
   getContextData() {
-    this.ordId = 1;
+    this.ordId = this.http.org_id_FromQueryparams;
     this.http.getContext(this.ordId).subscribe((res) => {
       this.contextData = res;
       console.log(this.contextData);
@@ -383,10 +384,10 @@ export class UserUploadComponent implements OnInit {
     this.userID = this.http.userID_FromQueryparams;
 
     this.inputMessage = this.demoMessage;
-    this.receivers_id_user = 2;
+    this.receivers_id_user = 12012;
     this.uploadedFileName = this.fileName;
-    this.receiver_org_id = 2;
-    this.receiver_user_id = 'tcs';
+    this.receiver_org_id = 117;
+    this.receiver_user_id = 'S10942_BA';
     console.log(this.uploadedFileName);
     let body = {
       file_context: this.contextName,
@@ -535,10 +536,14 @@ export class UserUploadComponent implements OnInit {
 
   }
   searchManagerFunction(){
+    if (this.searchManger.length>4) {
+      this.displayuser=true;
+
+    }
     console.log(this.searchManger)
-    this.http.searchmanager(this.searchManger).subscribe((res)=>{
-      console.log(res);
-    })
+    // this.http.searchmanager(this.searchManger).subscribe((res)=>{
+    //   console.log(res);
+    // })
 
   }
   addedManager:any=[]

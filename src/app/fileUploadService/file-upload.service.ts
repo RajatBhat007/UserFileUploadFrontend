@@ -39,7 +39,7 @@ export class FileUploadService {
     return this.Http.get(tempurl,data)
   }
   getSubCategory(data:any){
-    var tempurl=`${this.urlString}/getSubtypesByContext?context=${data}`;
+    var tempurl=`${this.urlString}/getSubtypesByContext?context=${data}&org_id=${this.org_id_FromQueryparams}`;
     return this.Http.get(tempurl,data)
   }
   postUserUpload(data:any,file:any){

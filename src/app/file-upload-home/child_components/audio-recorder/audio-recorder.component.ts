@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-// import * as RecordRTC from 'recordrtc';
+declare var $: any;
+import * as RecordRTC from 'recordrtc';
+
 @Component({
   selector: 'app-audio-recorder',
   templateUrl: './audio-recorder.component.html',
@@ -12,44 +14,74 @@ export class AudioRecorderComponent {
   private mediaRecorder: any;
   private audioChunks: Blob[] = [];
   chunks:any=[]
-
-  constructor( private sanitizer: DomSanitizer) {
+  title = 'micRecorder';
+  record:any;
+  recording:boolean = false;
+  url:any;
+  error:any;
+  recordingTime: string = '00:00';
+  timerInterval: any;
+  hideMic:boolean=false;
+  constructor( private domSanitizer: DomSanitizer) {
 
   }
-  startRecording() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-    .then((stream) => {
-        let mediaRecorder = new MediaRecorder(stream);
 
-        mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-                this.chunks.push(event.data);
-            }
-        };
-
-        // mediaRecorder.onstop = () => {
-        //     const blob = new Blob(this.chunks, { type: 'audio/wav' });
-        //     const objectURL = URL.createObjectURL(blob);
-        //     this.audioPlayer.src = objectURL;
-        //     this.audioPlayer.controls = true;
-        //     this.chunks = [];
-        // };
-
-        // mediaRecorder.start();
-        // startRecordingButton.disabled = true;
-        // stopRecordingButton.disabled = false;
-    })
-    .catch((error) => {
-        console.error('Error accessing microphone:', error);
-    });
-  }
-
-  stopRecording(): Blob {
-    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
-      this.mediaRecorder.stop();
+  // sanitize(url: string) {
+  //   return this.domSanitizer.bypassSecurityTrustUrl(url);
+  //   }
+    /**
+    * Start recording.
+    */
+    initiateRecording() {
+    this.recording = true;
+    this.hideMic=true;
+    this.startTimer();
+    let mediaConstraints = {
+    video: false,
+    audio: true
+    };
+    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
     }
-    return new Blob(this.audioChunks, { type: 'audio/wav' });
+    
+    successCallback(stream:any) {
+      const options: RecordRTC.Options = {
+        mimeType: "audio/wav",
+        numberOfAudioChannels: 1,
+        sampleRate: 44100,
+      };
+      
+      // Start Actual Recording
+      const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+      this.record = new StereoAudioRecorder(stream, options);
+      this.record.record();
+      
+      }
+stopRecording() {
+  this.recording = false;
+  this.recordingTime = '00:00';
+  clearInterval(this.timerInterval); 
+  this.record.stop(this.processRecording.bind(this));
+  }
+  
+  processRecording(blob:any) {
+  this.url = URL.createObjectURL(blob);
+  console.log("blob", blob);
+  console.log("url", this.url);
+
+  
   }
 
-
+errorCallback(error:any) {
+  this.error = 'Can not play audio in your browser';
+  }
+  startTimer() {
+    let seconds = 0;
+    this.timerInterval = setInterval(() => {
+      seconds++;
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      this.recordingTime = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }, 1000);
+  }
+  
 }

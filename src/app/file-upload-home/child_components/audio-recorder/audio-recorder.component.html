@@ -1,3 +1,17 @@
-<button id="startRecording">Start Recording</button>
-<button id="stopRecording" disabled>Stop Recording</button>
-<audio controls id="audioPlayer" #audioPlayer></audio>
+<div class="main-container" style="text-align:center" >
+    <div class="container" *ngIf="hideMic">
+        <button id="speech" class="btnMicOutside">
+        <button id="speech" class="btnMic">
+            <div class="pulse-ring"></div>
+              <i class="fa fa-microphone" aria-hidden="true"></i>
+        </button>  
+    </button>     
+        <div class="timer" *ngIf="recording">Recording Time: {{ recordingTime}}</div>
+    </div>
+    <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="cursor: pointer;background-color: green;color: white;font-size: 20px;"> Start Recording </button>
+    <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="cursor: pointer;background-color: red;color: white;font-size: 20px;"> Stop Recording </button>
+    <audio controls="" *ngIf="url">
+    <source [src]="url" type="audio/wav">
+    </audio>
+ </div>
+
