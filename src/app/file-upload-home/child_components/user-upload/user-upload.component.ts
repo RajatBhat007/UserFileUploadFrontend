@@ -406,10 +406,10 @@ export class UserUploadComponent implements OnInit {
     this.org_id = this.org_id_FromQueryparams;
     this.userID = this.userID_FromQueryparams;
     this.inputMessage = this.demoMessage;
-    this.receivers_id_user = 12012;
+    this.receivers_id_user = 2;
     this.uploadedFileName = this.fileName;
-    this.receiver_org_id = 117;
-    this.receiver_user_id = 'S10942_BA';
+    this.receiver_org_id = 2;
+    this.receiver_user_id = 'tcs';
     console.log(this.uploadedFileName);
     let body = {
       file_context: this.contextName,

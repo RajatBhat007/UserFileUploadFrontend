@@ -17,14 +17,16 @@ export class FileUploadService {
   fileData:any;
   videoContentUploaded:boolean=false;
   openVideo:boolean=false;
-  
+  newOrgId:any;
 
   getContext(data:any){
     var tempurl=`${this.urlString}/getAllContexts?org_id=${data}`;
     return this.Http.get(tempurl,data)
   }
   getSubCategory(data:any){
-    var tempurl=`${this.urlString}/getSubtypesByContext?context=${data}`;
+    this.newOrgId=localStorage.getItem('org_id');
+
+    var tempurl=`${this.urlString}/getSubtypesByContext?context=${data}&org_id=${this.newOrgId}`;
     return this.Http.get(tempurl,data)
   }
   postUserUpload(data:any,file:any){
