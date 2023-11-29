@@ -346,85 +346,107 @@ export class UserUploadComponent implements OnInit {
       this.uploadBtn.addEventListener('click', () => this.uploadVideo());
   }
 
-  getContextData() {
+  async getContextData() {
+  try {
     this.ordId = this.http.org_id_FromQueryparams;
-    this.http.getContext(this.ordId).subscribe((res) => {
-      this.contextData = res;
-      console.log(this.contextData);
-    });
+    this.contextData = await this.http.getContext(this.ordId).toPromise();
+    console.log(this.contextData);
+  } catch (error) {
+    console.error('Error fetching context data:', error);
   }
+}
 
-  getContextType(context: any) {
+
+async getContextType(context: any) {
+  try {
     console.log(context);
     this.contextName = context?.context;
     console.log(this.contextName);
 
     // Call Sub Category Here
-    this.http.getSubCategory(this.contextName).subscribe((res: any) => {
-      console.log(res);
-      this.subCategoryData = res;
-      if (this.subCategoryData) {
-        this.isSubCategoryDataHere = false;
-        
-      }
-    });
+    const res: any = await this.http.getSubCategory(this.contextName).toPromise();
+    console.log(res);
+    this.subCategoryData = res;
+
+    if (this.subCategoryData) {
+      this.isSubCategoryDataHere = false;
+    }
+  } catch (error) {
+    console.error('Error fetching subcategory data:', error);
   }
+}
+
   getContextSubType(contextsubType: any) {
     console.log(contextsubType);
     this.sub_typeFile = contextsubType?.subtype;
     console.log(this.sub_typeFile);
   }
 
-  postUploadedData(fileName: any) {
-    console.log(fileName)
-    this.fileContext = this.contextName;
-    this.sub_type = this.sub_typeFile;
-    this.id_user = this.http.id_user_FromQueryparams;
-    this.org_id = this.http.org_id_FromQueryparams;
-    this.userID = this.http.userID_FromQueryparams;
-
-    this.inputMessage = this.demoMessage;
-    this.receivers_id_user = 12012;
-    this.uploadedFileName = this.fileName;
-    this.receiver_org_id = 117;
-    this.receiver_user_id = 'S10942_BA';
-    console.log(this.uploadedFileName);
-    let body = {
-      file_context: this.contextName,
-      sub_type: this.sub_typeFile,
-      id_user: this.id_user,
-      org_id: this.org_id,
-      user_id: this.userID,
-      user_message: this.demoMessage,
-      receivers_id_user: this.receivers_id_user,
-      uploadedFileName: this.uploadedFileName,
-      receiver_org_id: this.receiver_org_id,
-      receiver_user_id: this.receiver_user_id,
-    };
-
-    console.log(body);
-
-    console.log(this.fileContext, this.sub_type);
-    console.log(this.file);
-    this.http.postUserUpload(body, this.file).subscribe((res: any) => {
+  async postUploadedData(fileName: any) {
+    try {
+      console.log(fileName);
+  
+      this.fileContext = this.contextName;
+      this.sub_type = this.sub_typeFile;
+      this.id_user = this.http.id_user_FromQueryparams;
+      this.org_id = this.http.org_id_FromQueryparams;
+      this.userID = this.http.userID_FromQueryparams;
+  
+      this.inputMessage = this.demoMessage;
+      this.receivers_id_user = 12012;
+      this.uploadedFileName = this.fileName;
+      this.receiver_org_id = 117;
+      this.receiver_user_id = 'S10942_BA';
+      console.log(this.uploadedFileName);
+  
+      let body = {
+        file_context: this.contextName,
+        sub_type: this.sub_typeFile,
+        id_user: this.http.id_user_FromQueryparams,
+        org_id: this.org_id,
+        user_id: this.userID,
+        user_message: this.demoMessage,
+        receivers_id_user: this.receivers_id_user,
+        uploadedFileName: this.uploadedFileName,
+        receiver_org_id: this.receiver_org_id,
+        receiver_user_id: this.receiver_user_id,
+      };
+  
+      console.log(body);
+  
+      console.log(this.fileContext, this.sub_type);
+      console.log(this.file);
+  
+      const res: any = await this.http.postUserUpload(body, this.file).toPromise();
+  
       console.log(res);
       this.successMessage = res.message;
-    });
+    } catch (error) {
+      console.error('Error posting user upload:', error);
+    }
   }
-  getUserUploadDetails() {
-    this.id_user = this.http.id_user_FromQueryparams;
-    this.org_id = this.http.org_id_FromQueryparams;
-    this.userID = this.http.userID_FromQueryparams;
-    let body = {
-      id_user: this.id_user,
-      org_id: this.org_id,
-      user_id: this.userID,
-    };
-    this.http.getUserUploadDatails(body).subscribe((res: any) => {
+  
+  async getUserUploadDetails() {
+    try {
+      this.id_user = this.http.id_user_FromQueryparams;
+      this.org_id = this.http.org_id_FromQueryparams;
+      this.userID = this.http.userID_FromQueryparams;
+  
+      let body = {
+        id_user: this.id_user,
+        org_id: this.org_id,
+        user_id: this.userID,
+      };
+  
+      const res: any = await this.http.getUserUploadDatails(body).toPromise();
+  
       console.log(res);
       this.DataForUserUploadDetails = res;
-    });
+    } catch (error) {
+      console.error('Error fetching user upload details:', error);
+    }
   }
+  
 
   handleFileInput(event: any): void {
     console.log(event);
@@ -514,7 +536,7 @@ export class UserUploadComponent implements OnInit {
     this.contentUploaded = true;
     const file = new File(
       [videoData],
-      `captured_video_${new Date().getTime()}.mp4`,
+      `video_${new Date().getTime()}.mp4`,
       { type: 'video/mp4' }
     );
   console.log('Received video data:', videoData);
@@ -522,7 +544,7 @@ export class UserUploadComponent implements OnInit {
   console.log( this.file);
   console.log('123',this.fileName);
 
-    const imageName = `captured_video_${new Date().getTime()}.mp4`;
+    const imageName = `video_${new Date().getTime()}.mp4`;
     this.fileName = imageName;
     this.fileSize=this.formatFileSize(this.file.size);
     this.fileType=this.file.type

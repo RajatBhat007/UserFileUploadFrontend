@@ -68,6 +68,13 @@ getUserUploadForFeedback(data:any){
     return this.Http.get(tempurl,data)
 
 }
+postFeedBack(data:any){
+  var tempurl = `${this.urlString}/postFeedbackForFile`
+  console.log(tempurl);
+    
+    return this.Http.post(tempurl,data)
+
+}
 
 searchmanager(data:any){
   var tempurl=`https://www.m2ost.in/M2OST_Console_PriME/api/KPI/UserSearchAPI?SearchString=${data}`

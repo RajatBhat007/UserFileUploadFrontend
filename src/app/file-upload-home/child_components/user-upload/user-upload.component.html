@@ -9,25 +9,28 @@
         <div *ngIf="newUploadActive==true;then newUpload else  UploadStatus "></div>
         <ng-template #newUpload>
           <div class="uploadStatusContainer">
-            <mat-form-field class="col-6">
+            <div class="d-flex justify-content-between gap-2">
+              <mat-form-field class="col-6">
           
-              <mat-label>Select Type</mat-label>
-              <mat-select  >
-                <mat-option value="1" *ngFor="let context of contextData" (click)="getContextType(context)">{{context?.context}}</mat-option>
-                <!-- <mat-option value="2">Option 2</mat-option>
-                <mat-option value="3">Option 3</mat-option> -->
-              </mat-select>
-            </mat-form-field>
-      
+                <mat-label>Select Type</mat-label>
+                <mat-select  >
+                  <mat-option value="1" *ngFor="let context of contextData" (click)="getContextType(context)">{{context?.context}}</mat-option>
+                  <!-- <mat-option value="2">Option 2</mat-option>
+                  <mat-option value="3">Option 3</mat-option> -->
+                </mat-select>
+              </mat-form-field>
+        
+              
+            <mat-form-field class="col-6" >
+               
+                <mat-label>Select Sub-Type</mat-label>
+                <mat-select [disabled]="isSubCategoryDataHere">
+                  <mat-option value="1" *ngFor="let subcategory of subCategoryData" (click)="getContextSubType(subcategory)">{{subcategory?.subtype}}</mat-option>
+                  
+                </mat-select>
+              </mat-form-field>
+            </div>
             
-          <mat-form-field class="col-6" >
-             
-              <mat-label>Select Sub-Type</mat-label>
-              <mat-select [disabled]="isSubCategoryDataHere">
-                <mat-option value="1" *ngFor="let subcategory of subCategoryData" (click)="getContextSubType(subcategory)">{{subcategory?.subtype}}</mat-option>
-                
-              </mat-select>
-            </mat-form-field>
      
       
           <!-- <mat-form-field  class="col-12">
@@ -235,7 +238,11 @@
               <div class="d-flex justify-content-between" style="width: 100%;height: 100%;">
                 <div class="col-2 d-flex justify-content-center align-items-center">
                   <div class="imgContainer">
-                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" >
+                  
+                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="100px" width="100px"  *ngIf="userUploadData.file_type=='pdf'||userUploadData.file_type=='docx'">
+                    <img src="assets/images/sound.png" alt="" height="100px" width="100px"  *ngIf="userUploadData.file_type=='audio'">
+                    <img src="assets/images/video.png" alt="" height="100px" width="100px"  *ngIf="userUploadData.file_type=='video'">
+                    <img src="assets/images/CameraImg.png" height="100px" width="100px" alt="" *ngIf="userUploadData?.file_type=='image'">
                   </div>
             
                 </div>
@@ -258,8 +265,8 @@
                   </div>
                   <p class="FeedBackdescription">{{userUploadData?.feedback?.user_feedback}}</p>
                   
-                  <div class="feedBackEmojiContainer"*ngIf="userUploadData?.feedback.rating!='1'">
-                    <div class="emojis ">
+                  <div class="feedBackEmojiContainer">
+                    <div class="emojis " *ngIf="userUploadData?.feedback.rating!='1'">
                       <img src="assets/images/Red.png" alt=""  height="100%" width="100%" >
                      <div style="width: 100%;border-top: 3px solid red;"></div>
                     </div>
@@ -611,10 +618,13 @@
         <ng-template #UploadStatusMobile>
           <div class="newUploadStatusContainer_mobile">
             <div class="mt-2" *ngFor="let userUploadData of DataForUserUploadDetails;let i=index" [ngClass]="{'uploadStatusCardExtended': openViewCard && i === selectedCardIndex, 'uploadStatusCardMobile': !openViewCard || i !== selectedCardIndex}">
-              <div class="d-flex justify-content-between gap-2" style="width: 100%;height: 100%;">
+              <div class="d-flex justify-content-between gap-1" style="width: 100%;height: 100%;">
                 <div class="col-3 d-flex justify-content-center align-items-center p-2">
                   <div class="imgContainer">
-                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%">
+                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="100%" width="100%"  *ngIf="userUploadData.file_type=='pdf'||userUploadData.file_type=='docx'">
+                    <img src="assets/images/sound.png" alt="" height="100%" width="100%"  *ngIf="userUploadData.file_type=='audio'">
+                    <img src="assets/images/video.png" alt="" height="100%" width="100%"  *ngIf="userUploadData.file_type=='video'">
+                    <img src="assets/images/CameraImg.png" height="100%" width="100%" alt="" *ngIf="userUploadData?.file_type=='image'">
                   </div>
             
                 </div>
@@ -781,7 +791,7 @@
          
           <button type="button" class="btn btn-primary" (click)="captureImage()" >Capture Image</button>
           <button type="button" class="btn btn-danger" (click)="cancelCapture()">Cancel</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="uploadImage()" [disabled]="!capturedImageDataUrl">Upload Image</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="uploadImage()" [disabled]="!capturedImageDataUrl">Upload Image</button>
         </div>
       </div>
     </div>

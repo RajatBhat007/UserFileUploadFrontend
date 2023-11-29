@@ -23,6 +23,7 @@ export class ApprovalsComponent implements OnInit {
   openViewCard: boolean = false;
   ViewButtonmessage: string = 'View More';
   selectedCardIndex: number = -1;
+  successMessage:string='Something went wrong!!!'
 
   displayContent: boolean = false;
   srcUrl: any;
@@ -30,6 +31,8 @@ export class ApprovalsComponent implements OnInit {
   id_user_FromQueryparams: any;
   org_id_FromQueryparams: any;
   userID_FromQueryparams: any;
+  selectedRating: any=0;
+  writeFeeback:string='';
   constructor(
     private http: FileUploadService,
     private sanitizer: DomSanitizer
@@ -40,31 +43,34 @@ export class ApprovalsComponent implements OnInit {
   
     
   }
-  getApprovalsListDetails() {
-    
-    this.id_user = this.http.id_user_FromQueryparams;
-    this.org_id = this.http.org_id_FromQueryparams;
-    this.userID = this.http.userID_FromQueryparams;
-
-    
-    let body = {
-      id_user:  this.id_user,
-      org_id:  this.org_id,
-      user_id:  this.userID,
-    };
-
-    this.http.getUserUploadForFeedback(body).subscribe((res: any) => {
+  async getApprovalsListDetails() {
+    try {
+      this.id_user = this.http.id_user_FromQueryparams;
+      this.org_id = this.http.org_id_FromQueryparams;
+      this.userID = this.http.userID_FromQueryparams;
+  
+      let body = {
+        id_user: this.id_user,
+        org_id: this.org_id,
+        user_id: this.userID,
+      };
+  
+      const res: any = await this.http.getUserUploadForFeedback(body).toPromise();
+  
       this.DataForListOfApprovals = res.filter(
         (item: any) => item.feedback.user_feedback === null
       );
       console.log(this.DataForListOfApprovals);
-
+  
       this.DataForListOfApprovalsHistory = res.filter(
         (item: any) => item.feedback.user_feedback !== null
       );
       console.log(this.DataForListOfApprovalsHistory);
-    });
+    } catch (error) {
+      console.error('Error fetching approvals list details:', error);
+    }
   }
+  
   ViewCard(index: any) {
     console.log(index);
 
@@ -73,12 +79,14 @@ export class ApprovalsComponent implements OnInit {
     this.selectedCardIndex = index;
     this.srcUrl=''
     this.displayContent = false;
+    this.selectedRating=0;
     // this.openViewCard=!this.openViewCard;
   }
   ViewLessCard(index: any) {
     this.openViewCard = false;
     this.ViewButtonmessage = 'View More';
     this.selectedCardIndex = index;
+    this.selectedRating=0;
   }
   downLoadPriview(userUploadData: any, index: any) {
     console.log(userUploadData);
@@ -125,6 +133,42 @@ export class ApprovalsComponent implements OnInit {
 
     // Create a hidden anchor element
   }
+  giveRating(index:any){
+    console.log(index);
+    // if(this.openViewCard && index === this.selectedRating){
+      this.selectedRating=index;
+    // }
+ 
+
+  }
+  async submitFeedback(data: any) {
+    try {
+      console.log("Clicked", data);
+  
+      let body = {
+        "id_userdetailslog": data?.id_userdetailslog,
+        "receivers_id_user": this.http.id_user_FromQueryparams,
+        "receiver_org_id": this.http.org_id_FromQueryparams,
+        "receiver_user_id": this.http.userID_FromQueryparams,
+        "feedback": this.writeFeeback,
+        "rating": this.selectedRating,
+        "file_context": data?.file_context,
+        "sub_type": data?.sub_type
+      };
+  
+      const res: any = await this.http.postFeedBack(body).toPromise();
+  
+      console.log(res);
+      this.successMessage = 'Submitted Feedback Successfully!!!';
+  
+    
+  
+      // this.getApprovalsListDetails();
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
+  }
+  
 
   openListofApprovals() {
     this.listApprovalsActive = true;
