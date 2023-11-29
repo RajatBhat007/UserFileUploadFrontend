@@ -236,6 +236,12 @@
     width: 100%;
     overflow-y: auto;
 }
+.ApproveListContainerNodata{
+    height: 30vh;
+    width: 100%;
+    overflow-y: hidden;
+
+}
 
 @media screen and (min-width:1024.1px) {
 
@@ -268,8 +274,9 @@
 }
 
 .noDataConainer{
-    height: 100%;
-    width: 100%;
+    // height: 30vh;
+    // width: 100%;
+    
     display: grid;
-    place-items: center;
+    align-items: center;
 }
