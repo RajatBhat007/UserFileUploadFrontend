@@ -828,19 +828,10 @@
                 <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" (click)="closeCamera()"></button>
             </div>
             <div class="modal-body">
-                <!-- Add an empty video element for camera stream -->
-                <!-- <video  id="videoStream" controls width="100%" height="auto" autoplay></video> -->
-                <!-- <webcam id="videoStream" *ngIf="!capturedImageDataUrl" [trigger]="triggerObservableVideoRecording" [allowCameraSwitch]="startRecordingVideo" [videoOptions]="videoOptions" (imageCapture)="handleImage($event)"></webcam>
-                <button (click)="startRecording()">Start Recording</button>
-                <button (click)="stopRecording()">Stop Recording</button>
-                <button (click)="uploadVideo()">Upload Video</button> -->
                 <div *ngIf="OpenRecoder==true;then openVideoRecorder "></div>
                 <ng-template #openVideoRecorder>
                   <app-video-recorder (uploadVideoData)="handleVideoUpload($event)"></app-video-recorder>
                 </ng-template>
-             
-               
-  
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" aria-label="Close">Close</button>
@@ -857,13 +848,14 @@
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Audio Recorder</h5>
-              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" ></button>
+              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"  (click)="closeAudio()"></button>
           </div>
           <div class="modal-body">
-             <app-audio-recorder></app-audio-recorder>          
+            
+             <app-audio-recorder (uploadAudioData)="handleAudioUpload($event)"></app-audio-recorder>          
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
           </div>
       </div>
   </div>

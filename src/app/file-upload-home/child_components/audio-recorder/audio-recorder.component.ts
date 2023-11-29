@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 import * as RecordRTC from 'recordrtc';
@@ -9,6 +9,7 @@ import * as RecordRTC from 'recordrtc';
   styleUrls: ['./audio-recorder.component.scss']
 })
 export class AudioRecorderComponent {
+  @Output() uploadAudioData: EventEmitter<Blob> = new EventEmitter<Blob>();
   @ViewChild('audioPlayer', { static: true })
   audioPlayer!: ElementRef;
   private mediaRecorder: any;
@@ -22,6 +23,9 @@ export class AudioRecorderComponent {
   recordingTime: string = '00:00';
   timerInterval: any;
   hideMic:boolean=false;
+  hideAudio: boolean = true;
+  blobdata: any;
+
   constructor( private domSanitizer: DomSanitizer) {
 
   }
@@ -61,14 +65,24 @@ stopRecording() {
   this.recordingTime = '00:00';
   clearInterval(this.timerInterval); 
   this.record.stop(this.processRecording.bind(this));
+  this.hideAudio = false;
+  this.hideMic = false;
   }
   
   processRecording(blob:any) {
   this.url = URL.createObjectURL(blob);
   console.log("blob", blob);
   console.log("url", this.url);
-
+ this.blobdata=blob;
   
+  }
+  uploadAudio() {
+    console.log(this.audioChunks);
+    console.log('Simulated upload success:', { success: true });
+    this.uploadAudioData.emit(this.blobdata);
+    this.audioChunks=[];
+    this.url=''
+    this.hideAudio = true;
   }
 
 errorCallback(error:any) {

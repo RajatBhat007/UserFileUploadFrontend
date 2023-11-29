@@ -13,8 +13,11 @@ export class VideoRecorderComponent {
   videoElement!: ElementRef;
   @ViewChild('recordButton', { static: true })
   recordButton!: ElementRef;
-  recording: boolean = false;
+  @ViewChild('StoprecordButton', { static: true })
+  StoprecordButton!: ElementRef;
 
+  recording: boolean = false;
+  activestop:boolean=false
   private mediaRecorder!: MediaRecorder;
   private recordedChunks: Blob[] = [];
   private stream!: MediaStream;
@@ -25,7 +28,9 @@ export class VideoRecorderComponent {
   constructor(
     public http: FileUploadService,
   
-  ) {}
+  ) {
+ 
+  }
 
   async ngAfterViewInit() {
     // Mute the audio on the main video element
@@ -60,15 +65,13 @@ export class VideoRecorderComponent {
 
   startRecording() {
     this.recordedChunks = [];
-
-    // Ensure the volume is set to 0 during recording
-    // this.videoElement.nativeElement.volume = 0;
-
     this.mediaRecorder.start();
     this.recording = true;
-
     this.recordButton.nativeElement.disabled = true;
     this.startTimer();
+    this.activestop=true;
+    this.StoprecordButton.nativeElement.disabled = false;
+
   }
 
   stopRecording() {
@@ -106,33 +109,15 @@ export class VideoRecorderComponent {
   }
   uploadVideo() {
     console.log(this.recordedChunks);
-    
     const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
     console.log(blob);
-    
     const formData = new FormData();
-    formData.append('video', blob, 'recorded_video.mp4');
-
-    // const formData = new FormData();
-    // formData.append('video', blob, 'recorded_video.webm');
-
-    // You can now send the FormData object to your server using Angular HttpClient
-    // Example:
-    // this.http.post('your_upload_url', formData).subscribe(
-    //   (response) => {
-    //     console.log('Upload success:', response);
-    //   },
-    //   (error) => {
-    //     console.error('Upload error:', error);
-    //   }
-    // );
-
-    // For demonstration purposes, you can log a simulated upload success
-
-
-    
+    formData.append('video', blob, 'recorded_video.mp4');    
     console.log('Simulated upload success:', { success: true });
     this.uploadVideoData.emit(blob);
+    this.recordedChunks=[];
+    this.recordedVideoUrl=''
+
   }
 
   ngOnDestroy() {

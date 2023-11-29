@@ -1,6 +1,6 @@
 <div class="main-container" style="text-align:center" >
-    <div class="container" *ngIf="hideMic">
-        <button id="speech" class="btnMicOutside">
+    <div class="container" *ngIf="hideMic" >
+    <button id="speech" class="btnMicOutside">
         <button id="speech" class="btnMic">
             <div class="pulse-ring"></div>
               <i class="fa fa-microphone" aria-hidden="true"></i>
@@ -8,10 +8,18 @@
     </button>     
         <div class="timer" *ngIf="recording">Recording Time: {{ recordingTime}}</div>
     </div>
-    <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="cursor: pointer;background-color: green;color: white;font-size: 20px;"> Start Recording </button>
-    <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="cursor: pointer;background-color: red;color: white;font-size: 20px;"> Stop Recording </button>
-    <audio controls="" *ngIf="url">
-    <source [src]="url" type="audio/wav">
+    <audio controls="" *ngIf="url" style="width: 100%;">
+        <source [src]="url" type="audio/wav">
     </audio>
+      
+    <div>
+        <button [hidden]="!hideAudio" (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="cursor: pointer;background-color: green;color: white;font-size: 20px;"> Start Recording </button>
+        <button [hidden]="!hideAudio" (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="cursor: pointer;background-color: red;color: white;font-size: 20px;"> Stop Recording </button>
+        <button [hidden]="hideAudio" data-bs-dismiss="modal"   (click)="uploadAudio()" class="btn btn-danger ms-2">
+            Upload 
+            </button>
+    </div>
+   
+   
  </div>
 
