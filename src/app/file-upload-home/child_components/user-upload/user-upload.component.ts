@@ -55,6 +55,7 @@ export class UserUploadComponent implements OnInit {
   openvideoRecorder: boolean=false;
   submitModalActivated: boolean=false;
   OpenRecoder: boolean=false;
+  OpenAudioRecoder:boolean=false;
   openSelectManagerCard: boolean=false;
   displayuser:boolean=false;
   Addbutton:string='Add +'
@@ -553,6 +554,30 @@ export class UserUploadComponent implements OnInit {
      console.log(this.fileName);
 
   }
+  handleAudioUpload(audioData:any){
+    this.contentUploaded = true;
+
+    console.log(audioData);
+    const file = new File(
+      [audioData],
+      `captured_audio_${new Date().getTime()}.mp3`,
+      { type: 'audio/mp3' }
+    );
+  console.log('Received audioData data:', audioData);
+  this.file=file;
+  console.log( this.file);
+  console.log('123',this.fileName);
+
+    const imageName = `captured_audio_${new Date().getTime()}.mp3`;
+    this.fileName = imageName;
+    this.fileSize=this.formatFileSize(this.file.size);
+    this.fileType=this.file.type
+    console.log('filesize',this.fileSize);
+    
+     console.log(this.fileName);
+
+    }
+  
   openSelectManager(){
     this.openSelectManagerCard=!this.openSelectManagerCard;
 
@@ -574,4 +599,9 @@ export class UserUploadComponent implements OnInit {
     
     this.Addbutton='Remove';
   }
+  closeAudio(){
+    
+  }
+
+
 }

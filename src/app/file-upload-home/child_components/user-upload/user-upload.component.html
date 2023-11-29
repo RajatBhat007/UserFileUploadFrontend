@@ -228,7 +228,10 @@
               <div class="d-flex justify-content-between" style="width: 100%;height: 100%;">
                 <div class="col-2 d-flex justify-content-center align-items-center">
                   <div class="imgContainer">
-                    <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" >
+                    <img  src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" *ngIf="this.userUploadData.file_type=='docx' || this.userUploadData.file_type=='pdf'">
+                    <img  src="assets/images/sound.png" alt="" height="95%" width="95%" *ngIf="this.userUploadData.file_type=='audio'">
+                    <img  src="assets/images/video.png" alt="" height="95%" width="95%" *ngIf="this.userUploadData.file_type=='video'">
+                    <img  src="assets/images/CameraImg.png" alt="" height="95%" width="95%" *ngIf="this.userUploadData.file_type=='image'">
                   </div>
             
                 </div>
@@ -829,19 +832,10 @@
                 <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" (click)="closeCamera()"></button>
             </div>
             <div class="modal-body">
-                <!-- Add an empty video element for camera stream -->
-                <!-- <video  id="videoStream" controls width="100%" height="auto" autoplay></video> -->
-                <!-- <webcam id="videoStream" *ngIf="!capturedImageDataUrl" [trigger]="triggerObservableVideoRecording" [allowCameraSwitch]="startRecordingVideo" [videoOptions]="videoOptions" (imageCapture)="handleImage($event)"></webcam>
-                <button (click)="startRecording()">Start Recording</button>
-                <button (click)="stopRecording()">Stop Recording</button>
-                <button (click)="uploadVideo()">Upload Video</button> -->
                 <div *ngIf="OpenRecoder==true;then openVideoRecorder "></div>
                 <ng-template #openVideoRecorder>
                   <app-video-recorder (uploadVideoData)="handleVideoUpload($event)"></app-video-recorder>
                 </ng-template>
-             
-               
-  
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" aria-label="Close">Close</button>
@@ -853,22 +847,23 @@
 
 
 <!-- Audio Record -->
-<!-- <div class="modal fade" id="exampleModalRecordAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalRecordAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Audio Recorder</h5>
-              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" ></button>
+              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"  (click)="closeAudio()"></button>
           </div>
           <div class="modal-body">
-             <app-audio-recorder></app-audio-recorder>          
+            
+             <app-audio-recorder (uploadAudioData)="handleAudioUpload($event)"></app-audio-recorder>          
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
           </div>
       </div>
   </div>
-</div> -->
+</div>
 
 <!-- Submit  Btn PopUp -->
 

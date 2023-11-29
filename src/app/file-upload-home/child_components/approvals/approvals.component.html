@@ -29,7 +29,10 @@
         <div class="d-flex justify-content-between" style="width: 100%; height: 100%">
           <div class="col-2 d-flex justify-content-center align-items-center">
             <div class="imgContainer">
-              <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" />
+              <img  src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='docx' || this.listOfApprovals.file_type=='pdf'">
+              <img  src="assets/images/sound.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='audio'">
+              <img  src="assets/images/video.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='video'">
+              <img  src="assets/images/CameraImg.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='image'">
             </div>
           </div>
           <div class="col-9">
@@ -134,7 +137,10 @@
         <div class="ListOfApprovalHistoryCard mt-2 p-2" *ngFor="let listOfApprovals of DataForListOfApprovalsHistory">
           <div class="col-2 d-flex justify-content-center align-items-center">
             <div class="imgContainer">
-              <img src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" />
+              <img  src="assets/images/UserUploadStatusImage.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='docx' || this.listOfApprovals.file_type=='pdf'">
+              <img  src="assets/images/sound.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='audio'">
+              <img  src="assets/images/video.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='video'">
+              <img  src="assets/images/CameraImg.png" alt="" height="95%" width="95%" *ngIf="this.listOfApprovals.file_type=='image'">
             </div>
           </div>
           <div class="col-9">

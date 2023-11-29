@@ -5,7 +5,7 @@
   <button #recordButton [hidden]="hideVideo" (click)="startRecording()" class="btn btn-primary">
     Start Recording
   </button>
-  <button [hidden]="hideVideo" (click)="stopRecording()" class="btn btn-danger ms-2">
+  <button #StoprecordButton [hidden]="hideVideo" (click)="stopRecording()" class="btn btn-danger ms-2" disabled>
     Stop Recording
   </button>
  
