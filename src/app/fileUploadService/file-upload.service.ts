@@ -32,7 +32,7 @@ export class FileUploadService {
   fileData:any;
   videoContentUploaded:boolean=false;
   openVideo:boolean=false;
-  
+  newOrgId:any;
 
   getContext(data:any){
     var tempurl=`${this.urlString}/getAllContexts?org_id=${data}`;
