@@ -176,4 +176,9 @@ export class ApprovalsComponent implements OnInit {
   openApprovalHistory() {
     this.listApprovalsActive = false;
   }
+  submittedPopUP(){
+    this.getApprovalsListDetails();
+    this.openViewCard=false;
+    // window.location.reload();
+  }
 }

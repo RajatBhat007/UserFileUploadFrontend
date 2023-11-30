@@ -14,8 +14,6 @@ export class FileUploadHomeComponent implements OnInit {
   isActiveTabApproval:boolean=false;
 
   ngOnInit(): void {
-  
-    
     }
 
     activeUserUpload(){

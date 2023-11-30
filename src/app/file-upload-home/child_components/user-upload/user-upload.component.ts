@@ -85,6 +85,8 @@ export class UserUploadComponent implements OnInit {
   public isRecording: boolean = false;
   private mediaRecorder: MediaRecorder | undefined;
   public recordedChunks: Blob[] = [];
+  submitBtnDisabled:boolean=true;
+  contentUploadedMobile:boolean=true;
 
   // Video Recorder
   modal!: HTMLElement | null;
@@ -380,7 +382,10 @@ async getContextType(context: any) {
   getContextSubType(contextsubType: any) {
     console.log(contextsubType);
     this.sub_typeFile = contextsubType?.subtype;
-    console.log(this.sub_typeFile);
+    if(this.sub_typeFile){
+     this.submitBtnDisabled=false;
+    }
+    
   }
 
   async postUploadedData(fileName: any) {
@@ -609,6 +614,9 @@ async getContextType(context: any) {
   }
   closeAudio(){
     
+  }
+  closeSubmitBtn(){
+    window.location.reload();
   }
 
 

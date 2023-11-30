@@ -49,7 +49,7 @@ export class AudioRecorderComponent {
     
     successCallback(stream:any) {
       const options: RecordRTC.Options = {
-        mimeType: "audio/wav",
+        mimeType: "audio/webm;codecs=pcm",
         numberOfAudioChannels: 1,
         sampleRate: 44100,
       };
@@ -61,12 +61,14 @@ export class AudioRecorderComponent {
       
       }
 stopRecording() {
+  
   this.recording = false;
   this.recordingTime = '00:00';
   clearInterval(this.timerInterval); 
   this.record.stop(this.processRecording.bind(this));
   this.hideAudio = false;
   this.hideMic = false;
+ 
   }
   
   processRecording(blob:any) {
