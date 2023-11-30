@@ -1,5 +1,6 @@
 <div class="row web-view">
         <div class="InnerTabBtn_container d-flex gap-3"  >
+          
           <div (click)="opennewUpload()"   [ngClass]="newUploadActive==true?'btn_InnerTabactive':'btn_innerTab'">New Upload</div>
           <div (click)="[openUploadStatus(),getUserUploadDetails()]" [ngClass]="newUploadActive==false?'btn_InnerTabactive':'btn_innerTab'">
             Upload Status
@@ -424,18 +425,7 @@
                 
               </mat-select>
             </mat-form-field>
-     
-      
-          <!-- <mat-form-field  class="col-12">
-             
-              <mat-label>Select Manager</mat-label>
-              <mat-select >
-                <mat-option value="1">Option 1</mat-option>
-                <mat-option value="2">Option 2</mat-option>
-                <mat-option value="3">Option 3</mat-option>
-              </mat-select>
-          </mat-form-field> -->
-          <!-- Select Manager UI -->
+    
           <div class="btn select-manager-mobile-btn col-12" (click)="openSelectManager()">
               <span> Select 1 or multiple manager</span>
               <span>
@@ -450,39 +440,7 @@
           <div *ngIf="openSelectManagerCard;then openSelectManagerCardMobile "></div>
           <ng-template #openSelectManagerCardMobile>
             <div class="selectManagerCard">
-              <!-- <div class="d-flex flex-column">
-                <div class="d-flex justify-content-between gap-1">
-                  <mat-form-field class="col-6">
-            
-                    <mat-label>Location</mat-label>
-                    <mat-select  >
-                      <mat-option value="1" >Pune</mat-option>
-              
-                    </mat-select>
-                  </mat-form-field>
-                
-                
-                  <mat-form-field class="col-6">
-            
-                    <mat-label>Department</mat-label>
-                    <mat-select  >
-                      <mat-option value="1" >Angular Developer</mat-option>
-                     
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                 
-                  <mat-form-field class="col-6">
-            
-                    <mat-label>Designation</mat-label>
-                    <mat-select  >
-                      <mat-option value="1" >Developer</mat-option>
-                  
-                    </mat-select>
-                  </mat-form-field>
-                 
-                
-              </div> -->
+             
               <div>
                 <div class="mt-1">
                   <div class="mobile-searchbar d-flex justify-content-center">
@@ -526,28 +484,32 @@
   
         
   
-       
-            <div class="priviewUploadContentMobile mb-2 mt-2" *ngIf="contentUploaded">
+          <div>dddddddd</div>
+          <div>{{contentUploaded}}</div>
+      
+          <div class="priviewUploadContentMobile mb-2" *ngIf="this.http.videoContentUploaded==true">
               
-              <div class="gray_container_mobile d-flex align-items-center gap-2">
-                  <div>
-                      <div class="fileIconForPdf">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36" fill="none">
-                              <path d="M11.5 27H24.5V24H11.5V27ZM11.5 21H24.5V18H11.5V21ZM8.25 33C7.35625 33 6.59115 32.7062 5.95469 32.1187C5.31823 31.5312 5 30.825 5 30V6C5 5.175 5.31823 4.46875 5.95469 3.88125C6.59115 3.29375 7.35625 3 8.25 3H21.25L31 12V30C31 30.825 30.6818 31.5312 30.0453 32.1187C29.4089 32.7062 28.6438 33 27.75 33H8.25ZM19.625 13.5V6H8.25V30H27.75V13.5H19.625Z" fill="black"/>
-                          </svg>
-                      </div>
-                     
-                  </div>
-                  
-                  <div class="d-flex flex-column gap-1">
-                      <span><b id="fileNameDisplay">{{fileName}}</b></span>
-                      <span><span >{{fileSize}}</span>|<span ></span>{{fileType}}</span>
-                  </div>
-              </div>
-              <div class="d-flex justify-content-end">
-                  <span class="">Status</span>
-              </div>
-          </div>
+            <div class="gray_container_mobile d-flex align-items-center gap-2">
+                <div>
+                    <div class="fileIconForPdf">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36" fill="none">
+                            <path d="M11.5 27H24.5V24H11.5V27ZM11.5 21H24.5V18H11.5V21ZM8.25 33C7.35625 33 6.59115 32.7062 5.95469 32.1187C5.31823 31.5312 5 30.825 5 30V6C5 5.175 5.31823 4.46875 5.95469 3.88125C6.59115 3.29375 7.35625 3 8.25 3H21.25L31 12V30C31 30.825 30.6818 31.5312 30.0453 32.1187C29.4089 32.7062 28.6438 33 27.75 33H8.25ZM19.625 13.5V6H8.25V30H27.75V13.5H19.625Z" fill="black"/>
+                        </svg>
+                    </div>
+                   
+                </div>
+                
+                <div class="d-flex flex-column gap-1">
+                    <span><b id="fileNameDisplay">{{fileName?fileName:this.http.fileData.name}}</b></span>
+                    <span><span >{{fileSize?fileSize:this.http.fileData.file_size}}</span>|<span ></span>{{fileType?fileType:this.http.fileData.file_type}}</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <span class="">Status</span>
+            </div>
+        </div>
+
+
           <div class="col-12 d-flex mt-3">
               <input type="text"  placeholder="Type a Message"  [(ngModel)]="demoMessage" style="height: 6vh;">
               <div class="btn-group ">

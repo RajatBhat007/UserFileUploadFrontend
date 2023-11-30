@@ -394,10 +394,10 @@ async getContextType(context: any) {
       this.userID = this.http.userID_FromQueryparams;
   
       this.inputMessage = this.demoMessage;
-      this.receivers_id_user = 12012;
+      this.receivers_id_user = 1;
       this.uploadedFileName = this.fileName;
-      this.receiver_org_id = 117;
-      this.receiver_user_id = 'S10942_BA';
+      this.receiver_org_id = 1;
+      this.receiver_user_id = 'tcs';
       console.log(this.uploadedFileName);
   
       let body = {
@@ -453,11 +453,15 @@ async getContextType(context: any) {
     console.log(event);
 
     this.file = event.target.files[0];
-
+     console.log(this.file);
+     
     // Get the first selected file
     if (this.file) {
       // Get file type
+      console.log("33",this.file);
       this.contentUploaded = true;
+      console.log('12345',this.contentUploaded );
+      
       this.fileType = this.file.type;
 
       // Get file name
