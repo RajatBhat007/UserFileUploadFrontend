@@ -40,7 +40,8 @@
         </div>
         <div class="col-9">
           <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;">
-            <div title="{{listOfApprovals?.file_name}}">{{listOfApprovals?.file_name.slice(0,20) }}...</div>
+         
+            <div >{{listOfApprovals?.user_firstname +' '+ listOfApprovals?.user_lastname }}</div>
             <div>{{ listOfApprovals?.file_context }}</div>
             <div>{{ listOfApprovals?.sub_type }}</div>
           </strong>
@@ -146,7 +147,7 @@
         <div class="d-flex flex-column justify-content-center gap-2 p-2 m-2" style="width: 95%;">
          <input type="text"  [(ngModel)]="writeFeeback" placeholder="Type a message" style=" height: 6vh;border-radius: 10px;border: 1px solid #000;padding-left: 2%;">
          <div class="d-flex justify-content-end">
-          <button class="btn btn-primary " (click)="submitFeedback(listOfApprovals)" data-bs-toggle="modal" data-bs-target="#submitPopup">
+          <button class="btn btn-primary " (click)="submitFeedback(listOfApprovals)"  (mouseover)="openSubmitFeedBack" data-bs-toggle="modal" data-bs-target="#submitPopup">
             Submit
           </button>
          </div>
@@ -216,7 +217,7 @@
               </div>
               <div class="col-9">
                 <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;">
-                  <div title="{{listOfApprovals?.file_name}}">{{ listOfApprovals?.file_name.slice(0,20) }}...</div>
+                  <div >{{listOfApprovals?.user_firstname +' '+ listOfApprovals?.user_lastname }}</div>
                   <div>{{ listOfApprovals?.file_context }}</div>
                   <div>{{ listOfApprovals?.sub_type }}</div>
                 </strong>
@@ -377,6 +378,8 @@
 </div>
 
 <!-- modal -->
+<div *ngIf="openSubmitFeedbackPopup;then submitFeedbackPopup "></div>
+<ng-template #submitFeedbackPopup></ng-template>
 <div class="modal fade" id="submitPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">

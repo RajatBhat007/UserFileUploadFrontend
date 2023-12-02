@@ -31,9 +31,9 @@
                 </div>
             </div>
             <div class="data_container">
-                <div *ngIf="isActiveTabUserUpload==true;then  UserUpload else Approvals "></div>
+                <div *ngIf="isActiveTabUserUpload==true;then  UserUpload else Approvals"></div>
                 <ng-template #UserUpload>
-                    <app-user-upload></app-user-upload>
+                    <app-user-upload [idRole]="role_id"></app-user-upload>
                 </ng-template>
                 <ng-template #Approvals>
                     <app-approvals></app-approvals>
@@ -60,11 +60,11 @@
                 </div>
             </div>
             <div class="data_container_mobile">
-                <div *ngIf="isActiveTabUserUpload==true;then  UserUpload else Approvals "></div>
-                <ng-template #UserUpload>
-                    <app-user-upload></app-user-upload>
+                <div *ngIf="isActiveTabUserUpload==true;then  UserUploadMobile else ApprovalsMobile "></div>
+                <ng-template #UserUploadMobile>
+                    <app-mobile-user-upload></app-mobile-user-upload>
                 </ng-template>
-                <ng-template #Approvals>
+                <ng-template #ApprovalsMobile>
                     <app-approvals></app-approvals>
                 </ng-template>
             </div>

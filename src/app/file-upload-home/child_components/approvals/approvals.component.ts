@@ -12,6 +12,7 @@ export class ApprovalsComponent implements OnInit {
   listApprovalsActive: boolean = true;
   DataForListOfApprovals: any;
   DataForListOfApprovalsHistory: any;
+  openSubmitFeedbackPopup:boolean=false;
   id_user: number = 0;
   org_id: number = 0;
   userID: string = '';
@@ -39,7 +40,9 @@ export class ApprovalsComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.listApprovalsActive = true;
+    this.openSubmitFeedbackPopup=false;
     this.getApprovalsListDetails();
+
   
     
   }
@@ -75,11 +78,13 @@ export class ApprovalsComponent implements OnInit {
     console.log(index);
 
     this.openViewCard = true;
+    
     this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;
     this.srcUrl=''
     this.displayContent = false;
     this.selectedRating=0;
+    this.writeFeeback='';
     // this.openViewCard=!this.openViewCard;
   }
   ViewLessCard(index: any) {
@@ -87,6 +92,7 @@ export class ApprovalsComponent implements OnInit {
     this.ViewButtonmessage = 'View More';
     this.selectedCardIndex = index;
     this.selectedRating=0;
+    this.writeFeeback='';
   }
   downLoadPriview(userUploadData: any, index: any) {
     console.log(userUploadData);
@@ -157,6 +163,7 @@ export class ApprovalsComponent implements OnInit {
       };
   
       const res: any = await this.http.postFeedBack(body).toPromise();
+
   
       console.log(res);
       this.successMessage = 'Submitted Feedback Successfully!!!';
@@ -167,6 +174,10 @@ export class ApprovalsComponent implements OnInit {
     } catch (error) {
       console.error('Error submitting feedback:', error);
     }
+  }
+  openSubmitFeedBack(){
+    this.openSubmitFeedbackPopup=true;
+    
   }
   
 

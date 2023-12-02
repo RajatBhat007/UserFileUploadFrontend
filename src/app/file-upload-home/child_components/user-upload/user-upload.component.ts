@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   Renderer2,
+  Input,
   ChangeDetectorRef,
 } from '@angular/core';
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
@@ -59,6 +60,15 @@ export class UserUploadComponent implements OnInit {
   openSelectManagerCard: boolean=false;
   disabledSubmitBtn:boolean=true;
   displayuser: boolean=false;
+  managerData: any;
+  managerUserid: any;
+  managerIDuser: any;
+  managerOrgId: any;
+  Managername: any;
+  firstName: any;
+  userFirstName: any;
+  userlastName: any;
+  role_id: any;
 
   constructor(
     public http: FileUploadService,
@@ -69,6 +79,7 @@ export class UserUploadComponent implements OnInit {
   ) {}
   @ViewChild('videoElement')
   videoElement!: ElementRef<any>;
+  @Input() idRole: any;
   video!: HTMLVideoElement;
   newUploadActive: boolean = true;
   contentUploaded: boolean = false;
@@ -120,10 +131,27 @@ export class UserUploadComponent implements OnInit {
 ];
   ngOnInit(): void {
     this.getContextData();
+    let body={
+      id_user:this.http.id_user_FromQueryparams,
+      user_id: this.http.userID_FromQueryparams,
+      org_id: this.http.org_id_FromQueryparams
+    }
+    this.http.getIDRole(body).subscribe((res:any)=>{
+      console.log(res);
+      this.role_id=res.level1_role_id;
+      if(this.role_id==1 ||this.role_id==2){
+        this.getManagerList()
+  
+      }
+      
+
+    })
     
     this.location = window.location.href
     var url = new URL(this.location)
-
+    console.log(this.idRole)
+   
+   
     console.log(url);
    
   
@@ -387,7 +415,32 @@ async getContextType(context: any) {
     }
     
   }
-
+  async getManagerList() {
+    try {
+      let body = {
+        id_user: this.http.id_user_FromQueryparams,
+        user_id: this.http.userID_FromQueryparams,
+        org_id: this.http.org_id_FromQueryparams
+      };
+  
+      const res: any = await this.http.getManager(body).toPromise();
+  
+      this.managerData = res;
+  
+      console.log(this.managerData);
+  
+      this.Managername = this.managerData?.level3_firstname + " " + this.managerData?.level3_lastname;
+      this.managerUserid = this.managerData?.level3_user_id;
+      this.managerIDuser = this.managerData?.level3_id_user;
+      this.managerOrgId = this.http.org_id_FromQueryparams;
+      this.userFirstName = this.managerData?.user_firstname;
+      this.userlastName = this.managerData?.user_lastname;
+    } catch (error) {
+      console.error('Error in getManagerList:', error);
+      // Handle the error as needed
+    }
+  }
+  
   async postUploadedData(fileName: any) {
     try {
       console.log(fileName);
@@ -399,10 +452,11 @@ async getContextType(context: any) {
       this.userID = this.http.userID_FromQueryparams;
   
       this.inputMessage = this.demoMessage;
-      this.receivers_id_user = 12012;
+      this.receivers_id_user = this.managerIDuser;
       this.uploadedFileName = this.fileName;
-      this.receiver_org_id = 117;
-      this.receiver_user_id = 'S10942_BA';
+      this.receiver_org_id = this.managerOrgId;
+      this.receiver_user_id = this.managerUserid;
+     
       console.log(this.uploadedFileName);
   
       let body = {
@@ -416,6 +470,8 @@ async getContextType(context: any) {
         uploadedFileName: this.uploadedFileName,
         receiver_org_id: this.receiver_org_id,
         receiver_user_id: this.receiver_user_id,
+        user_firstname:this.userFirstName,
+        user_lastname:this.userlastName
       };
   
       console.log(body);
@@ -431,6 +487,8 @@ async getContextType(context: any) {
       console.error('Error posting user upload:', error);
     }
   }
+
+  
   
   async getUserUploadDetails() {
     try {
@@ -487,21 +545,7 @@ async getContextType(context: any) {
     this.newUploadActive = false;
     this.isSubCategoryDataHere = true;
   }
-  ViewCard(index: any) {
-    console.log(index);
-    this.srcUrl=''
-    this.displayContent = false;
-    this.openViewCard = true;
-    this.ViewButtonmessage = 'View less';
-    this.selectedCardIndex = index;
-
-    // this.openViewCard=!this.openViewCard;
-  }
-  ViewLessCard(index: any) {
-    this.openViewCard = false;
-    this.ViewButtonmessage = 'View More';
-    this.selectedCardIndex = index;
-  }
+ 
   openVideoRecorderCamera(){
     this.OpenRecoder=true;
   }
@@ -618,6 +662,20 @@ async getContextType(context: any) {
   closeSubmitBtn(){
     window.location.reload();
   }
+  ViewCard(index: any) {
+    console.log(index);
+    this.srcUrl=''
+    this.displayContent = false;
+    this.openViewCard = true;
+    this.ViewButtonmessage = 'View less';
+    this.selectedCardIndex = index;
 
+    // this.openViewCard=!this.openViewCard;
+  }
+  ViewLessCard(index: any) {
+    this.openViewCard = false;
+    this.ViewButtonmessage = 'View More';
+    this.selectedCardIndex = index;
+  }
 
 }

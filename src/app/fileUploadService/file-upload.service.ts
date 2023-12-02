@@ -34,6 +34,13 @@ export class FileUploadService {
   openVideo:boolean=false;
   newOrgId:any;
 
+  getIDRole(data:any){
+    var tempurl = `${this.urlString}/getRoleDetails`
+    console.log(tempurl);
+      
+      return this.Http.post(tempurl,data)
+  }
+
   getContext(data:any){
     var tempurl=`${this.urlString}/getAllContexts?org_id=${data}`;
     return this.Http.get(tempurl,data)
@@ -51,7 +58,7 @@ export class FileUploadService {
     formData.append('file', file);
 
     formData.append('user_message',data.user_message)
-     var tempurl=`${this.urlString}/useruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&receivers_id_user=${data.receivers_id_user}&receiver_org_id=${data.receiver_org_id}&receiver_user_id=${data.receiver_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}`;
+     var tempurl=`${this.urlString}/useruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&receivers_id_user=${data.receivers_id_user}&receiver_org_id=${data.receiver_org_id}&receiver_user_id=${data.receiver_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}&user_firstname=${data.user_firstname}&user_lastname=${data.user_lastname}`;
     return this.Http.post(tempurl,formData)
   }
   getUserUploadDatails(data:any){
@@ -76,9 +83,11 @@ postFeedBack(data:any){
 
 }
 
-searchmanager(data:any){
-  var tempurl=`https://www.m2ost.in/M2OST_Console_PriME/api/KPI/UserSearchAPI?SearchString=${data}`
-  return this.Http.post(tempurl,data)
+getManager(data:any){
+  var tempurl = `${this.urlString}/getManagerDetails`
+  console.log(tempurl);
+    
+    return this.Http.post(tempurl,data)
 
 }
 
