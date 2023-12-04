@@ -55,7 +55,8 @@
         display: flex;
         align-items: center;
         gap: 2em;
-        width: 48%;
+        border: 2px solid #4872DC;
+        width: 100%;
         .card_image{
             height: 10vh;
             width: 10vw;
@@ -66,6 +67,7 @@
         font-family: 'Lato', sans-serif;
         font-size: 1.5em;
         font-style: normal;
+        
         font-weight: 700;
         line-height: 50.5px; /* 140.278% */
         letter-spacing: 0.6px;
@@ -127,16 +129,17 @@
     background: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     height: 7vh;
-    width: 48%;
+    width: 100%;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
+    border: 2px solid #4872DC;
     align-items: center;
 }
-.btn_active_card_mobile{
-    border: 2px solid #4872DC;
+// .btn_active_card_mobile{
+//     border: 2px solid #4872DC;
 
-}
+// }
 .data_container_mobile{
     height: 80vh;
     width: 100%;

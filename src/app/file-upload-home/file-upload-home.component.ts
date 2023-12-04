@@ -9,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileUploadHomeComponent implements OnInit {
   role_id: any;
+  showForBelowRole: boolean=true;
   constructor(public http:FileUploadService){}
 
-  isActiveTabUserUpload:boolean=true;
+  isActiveTabUserUpload:boolean=false;
   isActiveTabApproval:boolean=false;
 
   ngOnInit(): void {
@@ -29,10 +30,22 @@ export class FileUploadHomeComponent implements OnInit {
     
         console.log(res);
         this.role_id = res.level1_role_id;
+        console.log(this.role_id)
+        if(this.role_id==3){
+          this.showForBelowRole=false;
+          this.isActiveTabApproval=true;
+
+        }
+        else {
+          this.showForBelowRole=true;
+          this.isActiveTabUserUpload=true;
+
+
+        }
       } catch (error) {
         console.error('Error in getIDRole:', error);
         // Handle the error as needed
-        this.role_id ='3';
+      
         console.log(this.role_id);
       }
     }

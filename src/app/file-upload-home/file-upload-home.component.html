@@ -17,13 +17,13 @@
         </div>
         <div class="col-9 d-flex flex-column gap-2"> 
             <div class=" d-flex justify-content-between">
-                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card':'btn_card'">
+                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card':'btn_card'"  *ngIf="showForBelowRole">
                     <div class="card_image">
                         <img src="assets/images/newUpload.jpeg" alt="new_upload" height="100%" width="100%">
                     </div>
                     <div class="btn_title">New Upload</div>
                 </div>
-                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card':'btn_card'">
+                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card':'btn_card'" *ngIf="!showForBelowRole">
                     <div class="card_image">
                         <img src="assets/images/Approval.jpeg" alt="Approvals"  height="100%" width="100%">
                     </div>
@@ -52,10 +52,10 @@
     <div class="home_container">
         <div class="col-12 d-flex flex-column gap-2"> 
             <div class=" d-flex justify-content-between">
-                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card_mobile':'btn_card_mobile'">
+                <div  (click)="activeUserUpload()"[ngClass]="isActiveTabUserUpload==true?'btn_active_card_mobile':'btn_card_mobile'"  *ngIf="showForBelowRole">
                     <div class="btn_title">New Upload</div>
                 </div>
-                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card_mobile':'btn_card_mobile'">
+                <div   (click)="activeApprovals()" [ngClass]="isActiveTabApproval==true?'btn_active_card_mobile':'btn_card_mobile'"  *ngIf="!showForBelowRole">
                     <div class="btn_title">Approvals</div>
                 </div>
             </div>

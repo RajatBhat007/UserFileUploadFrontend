@@ -147,7 +147,7 @@
         <div class="d-flex flex-column justify-content-center gap-2 p-2 m-2" style="width: 95%;">
          <input type="text"  [(ngModel)]="writeFeeback" placeholder="Type a message" style=" height: 6vh;border-radius: 10px;border: 1px solid #000;padding-left: 2%;">
          <div class="d-flex justify-content-end">
-          <button class="btn btn-primary " (click)="submitFeedback(listOfApprovals)"  (mouseover)="openSubmitFeedBack" data-bs-toggle="modal" data-bs-target="#submitPopup">
+          <button class="btn btn-primary " (click)="submitFeedback(listOfApprovals)"  (mouseover)="openSubmitFeedBack()" data-bs-toggle="modal" data-bs-target="#submitPopup">
             Submit
           </button>
          </div>
@@ -379,23 +379,25 @@
 
 <!-- modal -->
 <div *ngIf="openSubmitFeedbackPopup;then submitFeedbackPopup "></div>
-<ng-template #submitFeedbackPopup></ng-template>
-<div class="modal fade" id="submitPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-          <div class="d-flex justify-content-end m-2" >
-            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" (click)="submittedPopUP()"></button>
-
-          </div>
-          <div class="modal-body">
-            <div class="PopUpImage">
-              <img src="assets/images/e26e4c2da924bdf6440b422619bb6c9b.jpeg" alt="" height="60%" width="100%"> 
-              <span class="successMessage" style="display: flex;justify-content: center;">{{successMessage}}</span>
+<ng-template #submitFeedbackPopup>
+  <div class="modal fade" id="submitPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="d-flex justify-content-end m-2" >
+              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" (click)="submittedPopUP()"></button>
+  
             </div>
-           
-            
-          </div>
-     
-      </div>
+            <div class="modal-body">
+              <div class="PopUpImage">
+                <img src="assets/images/e26e4c2da924bdf6440b422619bb6c9b.jpeg" alt="" height="60%" width="100%"> 
+                <span class="successMessage" style="display: flex;justify-content: center;">{{successMessage}}</span>
+              </div>
+             
+              
+            </div>
+       
+        </div>
+    </div>
   </div>
-</div>
+</ng-template>
+
