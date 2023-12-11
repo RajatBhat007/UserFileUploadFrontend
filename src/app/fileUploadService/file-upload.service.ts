@@ -28,7 +28,14 @@ export class FileUploadService {
 
 
   //urlString="http://3.109.140.126";
-  urlString="https://connectopia.app:8080"
+
+  //Production
+  // urlString="https://connectopia.app:8080"
+
+  //beta
+  urlString="https://www.connectopia.app:2000"
+
+
   fileData:any;
   videoContentUploaded:boolean=false;
   openVideo:boolean=false;
