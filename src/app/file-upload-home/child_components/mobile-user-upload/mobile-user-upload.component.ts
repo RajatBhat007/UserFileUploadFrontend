@@ -73,33 +73,25 @@ isSubCategoryDataHere: any;
       user_id: this.http.userID_FromQueryparams,
       org_id: this.http.org_id_FromQueryparams
     }
-   this.getIDRole();
+    
     console.log(this.role_id)
+    this.http.getIDRole(body).subscribe((res:any)=>{
+      console.log(res);
+      this.role_id=res.level1_role_id;
+      if(this.role_id==1 ||this.role_id==2){
+        this.getManagerList()
+  
+      }
+      
+
+    })
    
-    this.getManagerList()
+ 
    
     
    
   }
-  async getIDRole() {
-    try {
-      let body = {
-        id_user: this.http.id_user_FromQueryparams,
-        user_id: this.http.userID_FromQueryparams,
-        org_id: this.http.org_id_FromQueryparams
-      };
-  
-      const res: any = await this.http.getIDRole(body).toPromise();
-  
-      console.log(res);
-      this.role_id = res?.level1_role_id;
-    } catch (error) {
-      console.error('Error in getIDRole:', error);
-      // Handle the error as needed
-   
-      
-    }
-  }
+
   async getContextData() {
     try {
       this.orgId = this.http.org_id_FromQueryparams;

@@ -126,7 +126,8 @@
               <input type="text"  placeholder="Type a Message"  [(ngModel)]="demoMessage">
               <div class="btn-group">
                   <button type="button" class=" btn attachmentButton  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20" fill="none">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" >
                       <path d="M2.1333 9.20835L9.79163 16.8667C10.7298 17.8049 12.0023 18.332 13.3291 18.332C14.6559 18.332 15.9284 17.8049 16.8666 16.8667C17.8048 15.9285 18.3319 14.656 18.3319 13.3292C18.3319 12.0024 17.8048 10.7299 16.8666 9.79168L9.2083 2.13335C8.58283 1.50788 7.73451 1.15649 6.84996 1.15649C5.96542 1.15649 5.1171 1.50788 4.49163 2.13335C3.86616 2.75882 3.51478 3.60713 3.51477 4.49168C3.51477 5.37623 3.86616 6.22455 4.49163 6.85002L12.1583 14.5083C12.471 14.8211 12.8952 14.9968 13.3375 14.9968C13.7797 14.9968 14.2039 14.8211 14.5166 14.5083C14.8294 14.1956 15.0051 13.7715 15.0051 13.3292C15.0051 12.8869 14.8294 12.4627 14.5166 12.15L7.44163 5.08335" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
@@ -311,7 +312,7 @@
                         <div class="d-flex justify-content-end">
                             <span class="">Status</span>
                         </div>
-                    </div>
+                      </div>
                     <div *ngIf="displayContent;then displayContentContainer"></div>
                     <ng-template #displayContentContainer>
                       <div class="col-12 d-flex justify-content-center p-3">
