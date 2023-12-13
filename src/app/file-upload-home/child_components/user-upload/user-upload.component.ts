@@ -42,6 +42,9 @@ export class UserUploadComponent implements OnInit {
   receivers_id_user: any;
   receiver_org_id: number = 0;
   receiver_user_id: any;
+  rtm_id_user: any;
+  rtm_user_id:any;
+  rtm_org_id: number = 0;
   DataForUserUploadDetails: any;
   file: any;
   successMessage: any = 'Something Went Wrong!!!';
@@ -63,12 +66,16 @@ export class UserUploadComponent implements OnInit {
   managerData: any;
   managerUserid: any;
   managerIDuser: any;
+  rtmUserid:any;
+  rtmIDuser:any;
+  rtmName:any;
   managerOrgId: any;
   Managername: any;
   firstName: any;
   userFirstName: any;
   userlastName: any;
   role_id: any;
+ 
 
   constructor(
     public http: FileUploadService,
@@ -138,7 +145,7 @@ export class UserUploadComponent implements OnInit {
     }
     this.http.getIDRole(body).subscribe((res:any)=>{
       console.log(res);
-      this.role_id=res.level1_role_id;
+      this.role_id=res.level1_role_id?res.level1_role_id:res.RoleID ;
       if(this.role_id==1 ||this.role_id==2){
         this.getManagerList()
   
@@ -432,9 +439,13 @@ async getContextType(context: any) {
       this.Managername = this.managerData?.level3_firstname + " " + this.managerData?.level3_lastname;
       this.managerUserid = this.managerData?.level3_user_id;
       this.managerIDuser = this.managerData?.level3_id_user;
+      this.rtmUserid=this.managerData?.level4_user_id;
+      this.rtmIDuser=this.managerData?.level4_id_user;
+      this.rtmName=this.managerData?.level4_firstname + " " + this.managerData?.level4_lastname;
       this.managerOrgId = this.http.org_id_FromQueryparams;
       this.userFirstName = this.managerData?.user_firstname;
       this.userlastName = this.managerData?.user_lastname;
+
     } catch (error) {
       console.error('Error in getManagerList:', error);
       // Handle the error as needed
@@ -456,7 +467,9 @@ async getContextType(context: any) {
       this.uploadedFileName = this.fileName;
       this.receiver_org_id = this.managerOrgId;
       this.receiver_user_id = this.managerUserid;
-     
+      this.rtm_id_user=this.rtmIDuser;
+      this.rtm_user_id=this.rtmUserid;
+      this.rtm_org_id=this.managerOrgId;
       console.log(this.uploadedFileName);
   
       let body = {
@@ -471,7 +484,10 @@ async getContextType(context: any) {
         receiver_org_id: this.receiver_org_id,
         receiver_user_id: this.receiver_user_id,
         user_firstname:this.userFirstName,
-        user_lastname:this.userlastName
+        user_lastname:this.userlastName,
+        rtm_id_user:this.rtm_id_user,
+        rtm_user_id:this.rtm_user_id,
+        rtm_org_id: this.rtm_org_id,
       };
   
       console.log(body);

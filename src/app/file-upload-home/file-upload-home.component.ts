@@ -29,9 +29,9 @@ export class FileUploadHomeComponent implements OnInit {
         const res: any = await this.http.getIDRole(body).toPromise();
     
         console.log(res);
-        this.role_id = res.level1_role_id;
+        this.role_id=res.level1_role_id?res.level1_role_id:res.RoleID ;
         console.log(this.role_id)
-        if(this.role_id==3){
+        if(this.role_id==3 ||this.role_id==4){
           this.showForBelowRole=false;
           this.isActiveTabApproval=true;
 

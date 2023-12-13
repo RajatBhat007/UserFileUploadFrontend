@@ -34,6 +34,7 @@ export class ApprovalsComponent implements OnInit {
   userID_FromQueryparams: any;
   selectedRating: any=0;
   writeFeeback:string='';
+  role_id: any;
   constructor(
     private http: FileUploadService,
     private sanitizer: DomSanitizer
@@ -41,6 +42,19 @@ export class ApprovalsComponent implements OnInit {
   ngOnInit(): void {
     this.listApprovalsActive = true;
     this.openSubmitFeedbackPopup=false;
+    let body={
+      id_user:this.http.id_user_FromQueryparams,
+      user_id: this.http.userID_FromQueryparams,
+      org_id: this.http.org_id_FromQueryparams
+    }
+    this.http.getIDRole(body).subscribe((res:any)=>{
+      console.log(res);
+      this.role_id=res.level1_role_id?res.level1_role_id:res.RoleID ;
+
+      
+
+    })
+    
     this.getApprovalsListDetails();
 
   
@@ -57,18 +71,36 @@ export class ApprovalsComponent implements OnInit {
         org_id: this.org_id,
         user_id: this.userID,
       };
+    
+      if (this.role_id==3) {
+        console.log(this.role_id);
+        
+        const res: any = await this.http.getUserUploadForFeedback(body).toPromise();
+        this.DataForListOfApprovals = res.filter(
+          (item: any) => item.feedback.user_feedback === null
+        );
+        console.log(this.DataForListOfApprovals);
+    
+        this.DataForListOfApprovalsHistory = res.filter(
+          (item: any) => item.feedback.user_feedback !== null
+        );
+        console.log(this.DataForListOfApprovalsHistory);
   
-      const res: any = await this.http.getUserUploadForFeedback(body).toPromise();
+      } else {
+        const res: any = await this.http.getuseruploadforRTMfeedback(body).toPromise();
+        this.DataForListOfApprovals = res.filter(
+          (item: any) => item.feedback.user_feedback === null
+        );
+        console.log(this.DataForListOfApprovals);
+    
+        this.DataForListOfApprovalsHistory = res.filter(
+          (item: any) => item.feedback.user_feedback !== null
+        );
+        console.log(this.DataForListOfApprovalsHistory);
   
-      this.DataForListOfApprovals = res.filter(
-        (item: any) => item.feedback.user_feedback === null
-      );
-      console.log(this.DataForListOfApprovals);
-  
-      this.DataForListOfApprovalsHistory = res.filter(
-        (item: any) => item.feedback.user_feedback !== null
-      );
-      console.log(this.DataForListOfApprovalsHistory);
+      }
+   
+
     } catch (error) {
       console.error('Error fetching approvals list details:', error);
     }
