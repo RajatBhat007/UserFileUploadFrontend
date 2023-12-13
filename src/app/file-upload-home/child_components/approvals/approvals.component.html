@@ -98,52 +98,174 @@
           </div>
           
         </ng-template>
-        <div class="feedBackEmojiContainer">
-          <div class="emojis " (click)="giveRating(1)" *ngIf="selectedRating!='1'">
-            <img src="assets/images/Red.png" alt=""  height="100%" width="100%" >
-           <div style="width: 100%;border-top: 3px solid red;"></div>
+             
+        <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="">
+            <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;margin-left:0.6rem;">
+              Well Groomed 
+            </strong>
           </div>
-         <div class="activeEmojis"   *ngIf="selectedRating=='1'">
-          <img src="assets/images/redActive.png" alt=""  height="100%" width="100%">
-          <div style="width: 100%;border-top: 3px solid red;"></div>
-         
-         </div>
-         <div class="emojis" (click)="giveRating(2)" *ngIf="selectedRating!='2'">
-          <img src="assets/images/Orange.png" alt=""  height="100%" width="100%">
-          <div style="width: 100%;border-top: 3px solid orange;"></div>
+          <div class="feedBackEmojiContainer"> 
+            <div class="emojis " (click)="giveRatingWellGroomed(1)" *ngIf="selectedWellGroomedRating!='1'">
+              <img src="assets/images/Red.png" alt=""  height="100%" width="100%" >
+             <div style="width: 100%;border-top: 3px solid red;"></div>
+            </div>
+           <div class="activeEmojis"   *ngIf="selectedWellGroomedRating=='1'">
+            <img src="assets/images/redActive.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid red;"></div>
+           
+           </div>
+           <div class="emojis" (click)="giveRatingWellGroomed(2)" *ngIf="selectedWellGroomedRating!='2'">
+            <img src="assets/images/Orange.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="activeEmojis" *ngIf="selectedWellGroomedRating=='2'">
+            <img src="assets/images/OrangeActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="emojis" (click)="giveRatingWellGroomed(3)" *ngIf="selectedWellGroomedRating!='3'">
+            <img src="assets/images/Yellow.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedWellGroomedRating=='3'">
+            <img src="assets/images/YellowActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="emojis"(click)="giveRatingWellGroomed(4)" *ngIf="selectedWellGroomedRating!='4'">
+            <img src="assets/images/Parot.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedWellGroomedRating=='4'">
+            <img src="assets/images/ParotActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="emojis" (click)="giveRatingWellGroomed(5)"  *ngIf="selectedWellGroomedRating!='5'">
+            <img src="assets/images/Green.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedWellGroomedRating=='5'">
+            <img src="assets/images/GreenActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+          </div>
           
-         </div>
-         <div class="activeEmojis" *ngIf="selectedRating=='2'">
-          <img src="assets/images/OrangeActive.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid orange;"></div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="">
+          <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;margin-left: 0.6rem;">
+            Confidence Level 
+           </strong>
+           </div>
+          <div class="feedBackEmojiContainer">
+            <div class="emojis " (click)="giveRatingConfidenceLevel(1)" *ngIf="selectedConfidenceLevelRating!='1'">
+              <img src="assets/images/Red.png" alt=""  height="100%" width="100%" >
+             <div style="width: 100%;border-top: 3px solid red;"></div>
+            </div>
+           <div class="activeEmojis"   *ngIf="selectedConfidenceLevelRating=='1'">
+            <img src="assets/images/redActive.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid red;"></div>
+           
+           </div>
+           <div class="emojis" (click)="giveRatingConfidenceLevel(2)" *ngIf="selectedConfidenceLevelRating!='2'">
+            <img src="assets/images/Orange.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="activeEmojis" *ngIf="selectedConfidenceLevelRating=='2'">
+            <img src="assets/images/OrangeActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="emojis" (click)="giveRatingConfidenceLevel(3)" *ngIf="selectedConfidenceLevelRating!='3'">
+            <img src="assets/images/Yellow.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedConfidenceLevelRating=='3'">
+            <img src="assets/images/YellowActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="emojis"(click)="giveRatingConfidenceLevel(4)" *ngIf="selectedConfidenceLevelRating!='4'">
+            <img src="assets/images/Parot.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedConfidenceLevelRating=='4'">
+            <img src="assets/images/ParotActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="emojis" (click)="giveRatingConfidenceLevel(5)"  *ngIf="selectedConfidenceLevelRating!='5'">
+            <img src="assets/images/Green.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedConfidenceLevelRating=='5'">
+            <img src="assets/images/GreenActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+          </div>
           
-         </div>
-        <div class="emojis" (click)="giveRating(3)" *ngIf="selectedRating!='3'">
-          <img src="assets/images/Yellow.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid yellow;"></div>
+          </div>
         </div>
-         <div class="activeEmojis" *ngIf="selectedRating=='3'">
-          <img src="assets/images/YellowActive.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid yellow;"></div>
-         </div>
-         <div class="emojis"(click)="giveRating(4)" *ngIf="selectedRating!='4'">
-          <img src="assets/images/Parot.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid lime;"></div>
-         </div>
-        <div class="activeEmojis" *ngIf="selectedRating=='4'">
-          <img src="assets/images/ParotActive.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid lime;"></div>
+
+        <div class="col-12 col-md-4">
+          <div class="">
+          <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;margin-left:0.6rem;">
+            Subject Knowledge 
+          </strong>
+          </div>
+          <div class="feedBackEmojiContainer">
+            <div class="emojis " (click)="giveRatingSubjectKnowledge(1)" *ngIf="selectedSubjectKnowledgeRating!='1'">
+              <img src="assets/images/Red.png" alt=""  height="100%" width="100%" >
+             <div style="width: 100%;border-top: 3px solid red;"></div>
+            </div>
+           <div class="activeEmojis"   *ngIf="selectedSubjectKnowledgeRating=='1'">
+            <img src="assets/images/redActive.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid red;"></div>
+           
+           </div>
+           <div class="emojis" (click)="giveRatingSubjectKnowledge(2)" *ngIf="selectedSubjectKnowledgeRating!='2'">
+            <img src="assets/images/Orange.png" alt=""  height="100%" width="100%">
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="activeEmojis" *ngIf="selectedSubjectKnowledgeRating=='2'">
+            <img src="assets/images/OrangeActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid orange;"></div>
+            
+           </div>
+           <div class="emojis" (click)="giveRatingSubjectKnowledge(3)" *ngIf="selectedSubjectKnowledgeRating!='3'">
+            <img src="assets/images/Yellow.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedSubjectKnowledgeRating=='3'">
+            <img src="assets/images/YellowActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid yellow;"></div>
+           </div>
+           <div class="emojis"(click)="giveRatingSubjectKnowledge(4)" *ngIf="selectedSubjectKnowledgeRating!='4'">
+            <img src="assets/images/Parot.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedSubjectKnowledgeRating=='4'">
+            <img src="assets/images/ParotActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid lime;"></div>
+           </div>
+           <div class="emojis" (click)="giveRatingSubjectKnowledge(5)"  *ngIf="selectedSubjectKnowledgeRating!='5'">
+            <img src="assets/images/Green.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+           </div>
+           <div class="activeEmojis" *ngIf="selectedSubjectKnowledgeRating=='5'">
+            <img src="assets/images/GreenActive.png" alt=""  height="100%" width="100%" >
+            <div style="width: 100%;border-top: 3px solid green;"></div>
+          </div>
+          
+          </div>
         </div>
-         <div class="emojis" (click)="giveRating(5)"  *ngIf="selectedRating!='5'">
-          <img src="assets/images/Green.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid green;"></div>
-         </div>
-        <div class="activeEmojis" *ngIf="selectedRating=='5'">
-          <img src="assets/images/GreenActive.png" alt=""  height="100%" width="100%" >
-          <div style="width: 100%;border-top: 3px solid green;"></div>
         </div>
-        
-        </div>
+
+       
+
+
         <div class="d-flex flex-column justify-content-center gap-2 p-2 m-2" style="width: 95%;">
          <input type="text"  [(ngModel)]="writeFeeback" placeholder="Type a message" style=" height: 6vh;border-radius: 10px;border: 1px solid #000;padding-left: 2%;">
          <div class="d-flex justify-content-end">
