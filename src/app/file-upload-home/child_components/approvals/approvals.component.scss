@@ -145,8 +145,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 12vh;
-    width: 8vw;
+    // height: 12vh;
+    // width: 8vw;
+    height: 100px;
+    width: 100px;
 }
 
 .FeedBackdescription {
@@ -164,9 +166,9 @@
     height: 5vh;
     width: 95%;
     display: flex;
-    justify-content: end;
-    gap: 0.5em;
-    margin-top: 2vh;
+    justify-content: start;
+    gap: 1em;
+    margin:0.5rem 0.6rem 1rem;
 
 }
 

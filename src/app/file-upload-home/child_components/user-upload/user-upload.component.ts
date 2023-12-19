@@ -47,7 +47,7 @@ export class UserUploadComponent implements OnInit {
   rtm_org_id: number = 0;
   DataForUserUploadDetails: any;
   file: any;
-  successMessage: any = 'Something Went Wrong!!!';
+  successMessage: any = '';
   ViewButtonmessage: string = 'view More';
   srcUrl: any;
   displayContent: boolean = false;
@@ -75,7 +75,7 @@ export class UserUploadComponent implements OnInit {
   userFirstName: any;
   userlastName: any;
   role_id: any;
- 
+  OpenAudioRecoderWeb:boolean=false;
 
   constructor(
     public http: FileUploadService,
@@ -299,6 +299,7 @@ export class UserUploadComponent implements OnInit {
     // Calculate file size
     const fileSizeInBytes = file.size;
     this.fileSize = this.formatFileSize(fileSizeInBytes);
+
   }
 
   // Video REcorder
@@ -455,21 +456,16 @@ async getContextType(context: any) {
   async postUploadedData(fileName: any) {
     try {
       console.log(fileName);
-  
       this.fileContext = this.contextName;
       this.sub_type = this.sub_typeFile;
       this.id_user = this.http.id_user_FromQueryparams;
       this.org_id = this.http.org_id_FromQueryparams;
       this.userID = this.http.userID_FromQueryparams;
-  
       this.inputMessage = this.demoMessage;
       this.receivers_id_user = this.managerIDuser;
       this.uploadedFileName = this.fileName;
       this.receiver_org_id = this.managerOrgId;
       this.receiver_user_id = this.managerUserid;
-      this.rtm_id_user=this.rtmIDuser;
-      this.rtm_user_id=this.rtmUserid;
-      this.rtm_org_id=this.managerOrgId;
       console.log(this.uploadedFileName);
   
       let body = {
@@ -485,6 +481,47 @@ async getContextType(context: any) {
         receiver_user_id: this.receiver_user_id,
         user_firstname:this.userFirstName,
         user_lastname:this.userlastName,
+      };
+      console.log(body);
+      console.log(this.fileContext, this.sub_type);
+      console.log(this.file);
+  
+      const res: any = await this.http.postUserUpload(body, this.file).toPromise();
+  
+      console.log(res);
+      this.successMessage = res.message;
+
+    } catch (error) {
+      console.error('Error posting user upload:', error);
+    }
+  }
+
+  async postRTMuseruploadapi(fileName: any) {
+    try {
+      console.log(fileName);
+      this.fileContext = this.contextName;
+      this.sub_type = this.sub_typeFile;
+      this.id_user = this.http.id_user_FromQueryparams;
+      this.org_id = this.http.org_id_FromQueryparams;
+      this.userID = this.http.userID_FromQueryparams;
+
+      this.inputMessage = this.demoMessage;
+      this.uploadedFileName = this.fileName;
+      this.rtm_id_user=this.rtmIDuser;
+      this.rtm_user_id=this.rtmUserid;
+      this.rtm_org_id=this.managerOrgId;
+      console.log(this.uploadedFileName);
+  
+      let body = {
+        file_context: this.contextName,
+        sub_type: this.sub_typeFile,
+        id_user: this.http.id_user_FromQueryparams,
+        org_id: this.org_id,
+        user_id: this.userID,
+        user_message: this.demoMessage,
+        uploadedFileName: this.uploadedFileName,
+        user_firstname:this.userFirstName,
+        user_lastname:this.userlastName,
         rtm_id_user:this.rtm_id_user,
         rtm_user_id:this.rtm_user_id,
         rtm_org_id: this.rtm_org_id,
@@ -495,7 +532,7 @@ async getContextType(context: any) {
       console.log(this.fileContext, this.sub_type);
       console.log(this.file);
   
-      const res: any = await this.http.postUserUpload(body, this.file).toPromise();
+      const res: any = await this.http.postRTMuseruploadapi(body, this.file).toPromise();
   
       console.log(res);
       this.successMessage = res.message;
@@ -503,7 +540,6 @@ async getContextType(context: any) {
       console.error('Error posting user upload:', error);
     }
   }
-
   
   
   async getUserUploadDetails() {
@@ -541,7 +577,7 @@ async getContextType(context: any) {
 
       // Get file name
       this.fileName = this.file.name;
-
+        
       // Get file size
       this.fileSize = this.formatFileSize(this.file.size);
     }
@@ -673,7 +709,11 @@ async getContextType(context: any) {
 
   }
   closeAudio(){
-    
+    this.OpenAudioRecoderWeb=false;
+  }
+  openAudioRecorder(){
+    this.OpenAudioRecoderWeb=true;
+
   }
   closeSubmitBtn(){
     window.location.reload();

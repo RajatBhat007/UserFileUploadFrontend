@@ -65,9 +65,22 @@ export class FileUploadService {
     formData.append('file', file);
 
     formData.append('user_message', data.user_message)
-    var tempurl = `${this.urlString}/useruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&receivers_id_user=${data.receivers_id_user}&receiver_org_id=${data.receiver_org_id}&receiver_user_id=${data.receiver_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}&user_firstname=${data.user_firstname}&user_lastname=${data.user_lastname}&rtm_id_user=${data.rtm_id_user}&rtm_user_id=${data.rtm_user_id}&rtm_org_id=${data.rtm_org_id}`;
+    var tempurl = `${this.urlString}/useruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&receivers_id_user=${data.receivers_id_user}&receiver_org_id=${data.receiver_org_id}&receiver_user_id=${data.receiver_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}&user_firstname=${data.user_firstname}&user_lastname=${data.user_lastname}`;
     return this.Http.post(tempurl, formData)
   }
+
+  postRTMuseruploadapi(data:any,file:any){
+    console.log('fileData', this.fileData);
+    console.log('file', file)
+    const formData = new FormData();
+    // formData.append('file',file?file:this.fileData)
+    formData.append('file', file);
+    formData.append('user_message', data.user_message)
+    var tempurl = `${this.urlString}/rmuseruploadapi?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}&rtm_id_user=${data.rtm_id_user}&rtm_org_id=${data.rtm_org_id}&rtm_user_id=${data.rtm_user_id}&file_context=${data.file_context}&sub_type=${data.sub_type}&user_firstname=${data.user_firstname}&user_lastname=${data.user_lastname}`;
+    return this.Http.post(tempurl, formData)
+
+  }
+
   getUserUploadDatails(data: any) {
     console.log(data)
     var tempurl = `${this.urlString}/getUserUploadDetails?id_user=${data.id_user}&org_id=${data.org_id}&user_id=${data.user_id}`
@@ -83,7 +96,7 @@ export class FileUploadService {
   }
   getuseruploadforRTMfeedback(data: any) {
     console.log(data)
-    var tempurl = `${this.urlString}/getuseruploadforRTM/${data.id_user}/${data.org_id}/${data.user_id}`
+    var tempurl = `${this.urlString}/getuseruploadrtm/${data.id_user}/${data.org_id}/${data.user_id}`
     console.log(tempurl);
     return this.Http.get(tempurl, data)
   }
@@ -101,6 +114,12 @@ export class FileUploadService {
 
     return this.Http.post(tempurl, data)
 
+  }
+
+  getFeedbackForUser(data:any){
+    console.log(data)
+    var tempurl = `${this.urlString}/getFeedbackForUser?receivers_id_user=${data.id_user}&receiver_org_id=${data.org_id}&receiver_user_id=${data.user_id}`
+    return this.Http.get(tempurl)
   }
 
 
