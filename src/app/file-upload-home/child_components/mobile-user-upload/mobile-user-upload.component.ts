@@ -46,6 +46,7 @@ export class MobileUserUploadComponent implements OnInit {
   fileType: any;
   fileSize: any;
   OpenAudioRecoder:boolean=false;
+  loader: boolean=true;
   constructor(private http: FileUploadService) {
 
   }
@@ -245,9 +246,16 @@ export class MobileUserUploadComponent implements OnInit {
       const res: any = await this.http.postUserUpload(body, this.file1).toPromise();
 
       console.log(res);
-      this.successMessage = res.message;
+      console.log(res.status!=200);
+      console.log(res.status);
+      
+      if (res) {
+        this.successMessage = res.message;
+      }
     } catch (error) {
       console.error('Error posting user upload:', error);
+    }finally {
+      this.loader = false;
     }
   }
 

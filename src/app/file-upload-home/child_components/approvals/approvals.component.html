@@ -278,11 +278,11 @@
 
 
             <div class="d-flex flex-column justify-content-center gap-2 p-2 m-2" style="width: 95%;">
-              <input type="text" [(ngModel)]="writeFeeback" placeholder="Type a message"
+              <input type="text" [(ngModel)]="writeFeeback" placeholder="Type a message" (input)="onInputChange()"
                 style=" height: 6vh;border-radius: 10px;border: 1px solid #000;padding-left: 2%;">
               <div class="d-flex justify-content-end">
                 <button class="btn btn-primary " (click)="submitFeedback(listOfApprovals)"
-                  (mouseover)="openSubmitFeedBack()" data-bs-toggle="modal" data-bs-target="#submitPopup">
+                  (mouseover)="openSubmitFeedBack()" data-bs-toggle="modal" data-bs-target="#submitPopup"  [disabled]="submitFeddbackBtnDisabled">
                   Submit
                 </button>
               </div>
@@ -333,7 +333,7 @@
 
   </ng-template>
   <ng-template #ApprovalHistory>
-    <div>
+    <div class="">
       <div class="ApproveHistoryContainer">
         <div *ngIf="DataForListOfApprovalsHistory?.length!=0;then DataForListOfApprovalsHistoryContainer else noData ">
         </div>
@@ -355,7 +355,6 @@
               </div>
               <div class="col-9">
                 <strong class="d-flex flex-column  mt-2" style="font-size: 0.9em;">
-
                   <div>SP: {{listOfApprovals?.user_firstname +' '+ listOfApprovals?.user_lastname }}</div>
                   <div>Type: {{ listOfApprovals?.file_context }}</div>
                   <div>Sub-Type: {{ listOfApprovals?.sub_type }}</div>
@@ -627,11 +626,9 @@
           </div>
         </ng-template>
         <ng-template #noData>
-
-          <img src="assets/images/noData.jpg" alt="" height="100%" width="100%">
-
-
-
+          <div class="w-100 d-flex justify-content-center" style="height:57vh;">
+            <img src="assets/images/noData.jpg" alt="" height="100%" width="50%">
+          </div>
         </ng-template>
 
 

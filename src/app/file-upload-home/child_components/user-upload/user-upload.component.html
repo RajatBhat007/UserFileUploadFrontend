@@ -625,19 +625,24 @@
 <ng-template #submitDataModal>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="d-flex justify-content-end m-2" >
-              <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close" (click)="closeSubmitBtn()"></button>
+      <div class="modal-content" [ngStyle]="{ 'background': loader ? 'transparent' : '#FFFFFF' }" style="border: none;">
+        <div class="d-flex justify-content-end m-2">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" *ngIf="!loader"
+            (click)="closeSubmitBtn()"></button>
   
-            </div>
-            <div class="modal-body">
-              <div class="PopUpImage">
-                <img src="assets/images/e26e4c2da924bdf6440b422619bb6c9b.jpeg" alt="" height="60%" width="100%"> 
-                <span class="successMessage">{{successMessage}}</span>
-              </div>
-            </div>
-       
         </div>
+        <div class="modal-body">
+          <div class="PopUpImage">
+            <img *ngIf="!loader" src="assets/images/e26e4c2da924bdf6440b422619bb6c9b.jpeg" alt="" height="60%" width="100%">
+           
+            <div *ngIf="loader"> <img src="assets/images/Spinner.gif" alt="">
+            </div>
+             <span *ngIf="!loader" class="successMessage">{{successMessage}}</span>
+    
+          </div>
+        </div>
+  
+      </div>
     </div>
   </div>
 </ng-template>

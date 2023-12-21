@@ -47,7 +47,7 @@ export class UserUploadComponent implements OnInit {
   rtm_org_id: number = 0;
   DataForUserUploadDetails: any;
   file: any;
-  successMessage: any = '';
+  successMessage: any = 'Something Went Wrong!!!';
   ViewButtonmessage: string = 'view More';
   srcUrl: any;
   displayContent: boolean = false;
@@ -76,6 +76,7 @@ export class UserUploadComponent implements OnInit {
   userlastName: any;
   role_id: any;
   OpenAudioRecoderWeb:boolean=false;
+  loader: boolean=true;
 
   constructor(
     public http: FileUploadService,
@@ -485,14 +486,19 @@ async getContextType(context: any) {
       console.log(body);
       console.log(this.fileContext, this.sub_type);
       console.log(this.file);
-  
       const res: any = await this.http.postUserUpload(body, this.file).toPromise();
-  
-      console.log(res);
-      this.successMessage = res.message;
 
+      console.log(res);
+      console.log(res.status!=200);
+      console.log(res.status);
+      
+      if (res) {
+        this.successMessage = res.message;
+      }
     } catch (error) {
       console.error('Error posting user upload:', error);
+    }finally {
+      this.loader = false;
     }
   }
 
@@ -535,6 +541,7 @@ async getContextType(context: any) {
       const res: any = await this.http.postRTMuseruploadapi(body, this.file).toPromise();
   
       console.log(res);
+
       this.successMessage = res.message;
     } catch (error) {
       console.error('Error posting user upload:', error);

@@ -30,7 +30,7 @@ export class FileUploadService {
   //urlString="http://3.109.140.126";
 
   //Production
-  // urlString="https://connectopia.app:8080"
+  //  urlString="https://connectopia.app:8080"
 
   //beta
   urlString = "https://www.connectopia.app:2000"
