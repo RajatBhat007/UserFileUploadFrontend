@@ -25,7 +25,7 @@ export class ApprovalsComponent implements OnInit {
   openViewCard: boolean = false;
   ViewButtonmessage: string = 'View More';
   selectedCardIndex: number = -1;
-  successMessage: string = 'Something went wrong!!!'
+  successMessage: string = 'Something went wrong!!!';
 
   displayContent: boolean = false;
   srcUrl: any;
@@ -40,30 +40,29 @@ export class ApprovalsComponent implements OnInit {
   role_id: any;
   id_type: any;
   id_value: any;
-  id_user_value: any
+  id_user_value: any;
   FeedbackForUser: any;
   submitFeddbackBtnDisabled: boolean = true;
   constructor(
     private http: FileUploadService,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.listApprovalsActive = true;
     this.openSubmitFeedbackPopup = false;
-    this.id_user_value = this.http.id_user_FromQueryparams
+    this.id_user_value = this.http.id_user_FromQueryparams;
     let body = {
       id_user: this.http.id_user_FromQueryparams,
       user_id: this.http.userID_FromQueryparams,
-      org_id: this.http.org_id_FromQueryparams
-    }
+      org_id: this.http.org_id_FromQueryparams,
+    };
     this.http.getIDRole(body).subscribe((res: any) => {
       console.log(res);
       this.role_id = res.level1_role_id ? res.level1_role_id : res.RoleID;
       console.log(this.role_id);
       this.getFeedbackForUser();
       this.getApprovalsListDetails();
-
-    })
+    });
   }
 
   async getFeedbackForUser() {
@@ -83,29 +82,21 @@ export class ApprovalsComponent implements OnInit {
         this.FeedbackForUser = res;
         console.log(this.FeedbackForUser);
 
-
         // console.log(this.DataForListOfApprovals);
 
         // this.DataForListOfApprovalsHistory = res.filter(
         //   (item: any) => item.feedback.feedback_given_by_id_user == this.http.id_user_FromQueryparams
         // );
         // console.log(this.DataForListOfApprovalsHistory);
-
-      }
-      else {
+      } else {
         const res: any = await this.http.getFeedbackForUser(body).toPromise();
         this.FeedbackForUser = res;
         console.log(this.FeedbackForUser);
-
-
       }
-
-
     } catch (error) {
       console.error('Error fetching approvals list details:', error);
     }
   }
-
 
   async getApprovalsListDetails() {
     console.log(this.role_id);
@@ -122,30 +113,43 @@ export class ApprovalsComponent implements OnInit {
       console.log(this.role_id);
       if (this.role_id == 3) {
         console.log(this.role_id);
-        const res: any = await this.http.getUserUploadForFeedback(body).toPromise();
+        const res: any = await this.http
+          .getUserUploadForFeedback(body)
+          .toPromise();
         console.log(res.length);
-        const userFeedback = res.filter((item: any) =>
-          item.feedback &&
-          item.feedback.feedback_given_by_id_user == this.http.id_user_FromQueryparams &&
-          item.feedback.feedback_given_by_org_id == this.http.org_id_FromQueryparams &&
-          item.feedback.feedback_given_by_user_id == this.http.userID_FromQueryparams
+        const userFeedback = res.filter(
+          (item: any) =>
+            item.feedback &&
+            item.feedback.feedback_given_by_id_user ==
+              this.http.id_user_FromQueryparams &&
+            item.feedback.feedback_given_by_org_id ==
+              this.http.org_id_FromQueryparams &&
+            item.feedback.feedback_given_by_user_id ==
+              this.http.userID_FromQueryparams
         );
         console.log(res);
         console.log(userFeedback);
-        const filteredArray = res.filter((item: any, index: any) => item.id_userdetailslog != userFeedback[index]?.id_userdetailslog && item.feedback.feedback_given_by_id_user != this.http.id_user_FromQueryparams);
+        const filteredArray = res.filter(
+          (item: any, index: any) =>
+            item.id_userdetailslog != userFeedback[index]?.id_userdetailslog &&
+            item.feedback.feedback_given_by_id_user !=
+              this.http.id_user_FromQueryparams
+        );
 
         console.log(filteredArray);
         this.DataForListOfApprovals = filteredArray;
         this.DataForListOfApprovalsHistory = res.filter(
-          (item: any) => item.feedback.feedback_given_by_id_user == this.http.id_user_FromQueryparams
+          (item: any) =>
+            item.feedback.feedback_given_by_id_user ==
+            this.http.id_user_FromQueryparams
         );
         console.log(this.DataForListOfApprovalsHistory);
-
-      }
-      else {
+      } else {
         console.log(this.role_id);
 
-        const res: any = await this.http.getuseruploadforRTMfeedback(body).toPromise();
+        const res: any = await this.http
+          .getuseruploadforRTMfeedback(body)
+          .toPromise();
         console.log(res.length);
         // if(res.length>0){
         //   this.DataForListOfApprovals = res.filter(
@@ -165,21 +169,29 @@ export class ApprovalsComponent implements OnInit {
         // }
         console.log(res);
 
-        const userFeedback = res.filter((item: any) =>
-          item.feedback &&
-          item.feedback.feedback_given_by_id_user == this.http.id_user_FromQueryparams &&
-          item.feedback.feedback_given_by_org_id == this.http.org_id_FromQueryparams &&
-          item.feedback.feedback_given_by_user_id == this.http.userID_FromQueryparams
+        const userFeedback = res.filter(
+          (item: any) =>
+            item.feedback &&
+            item.feedback.feedback_given_by_id_user ==
+              this.http.id_user_FromQueryparams &&
+            item.feedback.feedback_given_by_org_id ==
+              this.http.org_id_FromQueryparams &&
+            item.feedback.feedback_given_by_user_id ==
+              this.http.userID_FromQueryparams
         );
         console.log(userFeedback?.id_userdetailslog);
 
         // this.DataForListOfApprovals=res
 
-        const filteredArray = res.filter((item: any, index: any) => item.id_userdetailslog != userFeedback[index]?.id_userdetailslog && item.feedback.feedback_given_by_id_user != this.http.id_user_FromQueryparams);
+        const filteredArray = res.filter(
+          (item: any, index: any) =>
+            item.id_userdetailslog != userFeedback[index]?.id_userdetailslog &&
+            item.feedback.feedback_given_by_id_user !=
+              this.http.id_user_FromQueryparams
+        );
 
         console.log(filteredArray);
-        this.DataForListOfApprovals = filteredArray
-
+        this.DataForListOfApprovals = filteredArray;
 
         //   const resultArray = res.filter((originalItem:any) =>
         //   this.FeedbackForUser.some((compareItem:any) =>
@@ -190,13 +202,12 @@ export class ApprovalsComponent implements OnInit {
         //   console.log(resultArray);
 
         this.DataForListOfApprovalsHistory = res.filter(
-          (item: any) => item.feedback.feedback_given_by_id_user == this.http.id_user_FromQueryparams
-
+          (item: any) =>
+            item.feedback.feedback_given_by_id_user ==
+            this.http.id_user_FromQueryparams
         );
         console.log(this.DataForListOfApprovalsHistory);
       }
-
-
     } catch (error) {
       console.error('Error fetching approvals list details:', error);
     }
@@ -212,7 +223,6 @@ export class ApprovalsComponent implements OnInit {
     return !this.displayedIds.includes(id);
   }
 
-
   ViewCard(index: any) {
     console.log(index);
 
@@ -220,7 +230,7 @@ export class ApprovalsComponent implements OnInit {
 
     this.ViewButtonmessage = 'View less';
     this.selectedCardIndex = index;
-    this.srcUrl = ''
+    this.srcUrl = '';
     this.displayContent = false;
     this.selectedWellGroomedRating = 0;
     this.selectedConfidenceLevelRating = 0;
@@ -263,11 +273,9 @@ export class ApprovalsComponent implements OnInit {
           this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
         } else if (userUploadData.file_type === 'image') {
           this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
+        } else if (userUploadData.file_type === 'audio') {
+          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`;
         }
-        else if (userUploadData.file_type === 'audio') {
-          this.srcUrl = `${this.http.urlString}/${userUploadData?.file_path}`
-        }
-
 
         console.log(this.srcUrl);
 
@@ -298,53 +306,56 @@ export class ApprovalsComponent implements OnInit {
   }
 
   onInputChange() {
-    if (this.selectedWellGroomedRating != 0 && this.selectedConfidenceLevelRating != 0 && this.selectedSubjectKnowledgeRating != 0) {
+    if (
+      this.selectedWellGroomedRating != 0 &&
+      this.selectedConfidenceLevelRating != 0 &&
+      this.selectedSubjectKnowledgeRating != 0
+    ) {
       if (this.writeFeeback.length >= 2) {
         console.log(this.writeFeeback.length);
         this.submitFeddbackBtnDisabled = false;
-      }
-      else {
+      } else {
         this.submitFeddbackBtnDisabled = true;
       }
-    }
-    else {
+    } else {
       this.submitFeddbackBtnDisabled = true;
     }
   }
 
   async submitFeedback(data: any) {
     try {
-      console.log("Clicked", data);
-      this.id_value = this.http.id_user_FromQueryparams + "/" + this.http.org_id_FromQueryparams + "/" + this.http.userID_FromQueryparams;
+      console.log('Clicked', data);
+      this.id_value =
+        this.http.id_user_FromQueryparams +
+        '/' +
+        this.http.org_id_FromQueryparams +
+        '/' +
+        this.http.userID_FromQueryparams;
       if (this.role_id == 3) {
-        this.id_type = "receivers";
-
+        this.id_type = 'receivers';
       } else {
-        this.id_type = "rtm";
+        this.id_type = 'rtm';
       }
       let body = {
-        "id_type": this.id_type,
-        "id_value": this.id_value,
-        "id_userdetailslog": data?.id_userdetailslog,
+        id_type: this.id_type,
+        id_value: this.id_value,
+        id_userdetailslog: data?.id_userdetailslog,
         // "receivers_id_user": this.http.id_user_FromQueryparams,
         // "receiver_org_id": this.http.org_id_FromQueryparams,
         // "receiver_user_id": this.http.userID_FromQueryparams,
-        "feedback": this.writeFeeback,
-        "rating": 1,
-        "Well_Groomed": this.selectedWellGroomedRating,
-        "Confidence_level": this.selectedConfidenceLevelRating,
-        "subject_knowledge": this.selectedSubjectKnowledgeRating,
-        "file_context": data?.file_context,
-        "sub_type": data?.sub_type
+        feedback: this.writeFeeback,
+        rating: 1,
+        Well_Groomed: this.selectedWellGroomedRating,
+        Confidence_level: this.selectedConfidenceLevelRating,
+        subject_knowledge: this.selectedSubjectKnowledgeRating,
+        file_context: data?.file_context,
+        sub_type: data?.sub_type,
       };
 
       const res: any = await this.http.postFeedBack(body).toPromise();
 
-
       console.log(res);
       this.successMessage = 'Feedback Submitted Successfully!!!';
-
-
 
       // this.getApprovalsListDetails();
     } catch (error) {
@@ -353,9 +364,7 @@ export class ApprovalsComponent implements OnInit {
   }
   openSubmitFeedBack() {
     this.openSubmitFeedbackPopup = true;
-
   }
-
 
   openListofApprovals() {
     this.listApprovalsActive = true;
